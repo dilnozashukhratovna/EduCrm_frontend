@@ -5,6 +5,7 @@ import {
   mdiCog,
   mdiDoor,
   mdiDoorClosed,
+  mdiGolf,
 } from "@mdi/js";
 
 export const AdminMenu = [
@@ -31,5 +32,11 @@ export const AdminMenu = [
     name: "profile",
     label: "Profile",
     icon: mdiCog,
+  },
+  {
+    path: "/courses",
+    name: "courses",
+    label: "Courses",
+    icon: mdiGolf,
   },
 ];

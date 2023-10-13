@@ -1,7 +1,7 @@
 export default {
   path: "/admin",
   name: "admin",
-  component: () => import("@/layouts/MainLayout.vue"),
+  component: () => import("@/pages/admin/AdminPage.vue"),
   children: [
     {
       path: "/students",
@@ -22,6 +22,11 @@ export default {
       path: "/profile",
       name: "profile",
       component: () => import("@/pages/admin/ProfilePage.vue"),
+    },
+    {
+      path: "/courses",
+      name: "courses",
+      component: () => import("@/pages/admin/CoursePage.vue"),
     },
   ],
   meta: {
