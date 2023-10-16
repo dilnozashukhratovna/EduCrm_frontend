@@ -8,6 +8,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hennge/vue3-pagination": "^1.0.17",
     "@jamescoyle/vue-icon": "0.1.2",
     "@mdi/js": "7.3.67",
     "@vee-validate/rules": "^4.11.8",

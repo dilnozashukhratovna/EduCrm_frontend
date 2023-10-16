@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-[70px] bg-color1 flex justify-between items-center px-10 border-2 border-white">
+    class="w-full h-[76px] bg-color1 flex justify-between items-center px-10 lg:border-l">
     <div class="flex items-center">
       <div class="button">
         <button
@@ -49,6 +49,7 @@ import {
   mdiChevronDown,
   mdiChevronRight,
   mdiChevronLeft,
+  mdiMenu,
 } from "@mdi/js";
 import { ref } from "vue";
 import { UseSidebar } from "../../hooks/UseSidebar";

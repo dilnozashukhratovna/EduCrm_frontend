@@ -29,3 +29,4 @@ coverage
 *.sln
 *.sw?
 jsconfig.json
+password.txt

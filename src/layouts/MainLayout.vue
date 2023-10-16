@@ -13,7 +13,7 @@
     <Sidebar />
     <div class="w-full flex flex-col">
       <Header />
-      <div class="main">
+      <div class="overflow-auto h-full">
         <router-view></router-view>
       </div>
     </div>
@@ -32,10 +32,5 @@ import Header from "@/components/header/Header.vue";
 //   // width: 100%;
 // }
 
-.main {
-  padding: 20px;
-  font-family: sans-serif;
-  font-size: 25px;
-  color: #12486b;
-}
+
 </style>

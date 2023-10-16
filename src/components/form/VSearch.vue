@@ -1,5 +1,5 @@
 <template>
-  <div class="w-[400px] relative">
+  <div class="w-[300px] relative">
     <input
       type="text"
       placeholder="Search"
