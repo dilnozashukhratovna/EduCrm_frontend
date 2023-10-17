@@ -42,8 +42,8 @@ import VInput from "@/components/form/VInput.vue";
 import VPasswordInput from "@/components/form/VPasswordInput.vue";
 import Loader from "@/components/loader/Loader.vue";
 import { useAuthStore } from "@/stores/auth";
-import { danger, success } from "@/plugins/Notification.js";
 import VButton from "@/components/form/VButton.vue";
+import Notification from "../../plugins/Notification";
 
 const authStore = useAuthStore();
 const schema = computed(() => {
@@ -72,10 +72,10 @@ const save = async (values) => {
     password: values.password,
   });
   if (authStore.error) {
-    danger(authStore.error);
+    Notification(authStore.error, "danger");
     authStore.error = null;
   } else {
-    success("Login Success");
+    Notification("You've successfully logged in", "success");
   }
   console.log(authStore.user);
   loading.value = false;

@@ -1,14 +1,13 @@
-import { toast } from "vue3-toastify";
+import { createToast } from "mosha-vue-toastify";
+import "mosha-vue-toastify/dist/style.css";
 
-export const danger = (text) => {
-  return toast.error(text);
+const Notification = (text, color, timeout = 2000) => {
+  createToast(text, {
+    position: "top-right",
+    type: color,
+    transition: "bounce",
+    timeout: timeout,
+  });
 };
-export const info = (text) => {
-  return toast.info(text);
-};
-export const warning = (text) => {
-  return toast.warn(text);
-};
-export const success = (text) => {
-  return toast.success(text);
-};
+
+export default Notification;

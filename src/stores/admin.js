@@ -13,6 +13,7 @@ export const useAdminStore = defineStore("admin", {
   actions: {
     async getStudents(params) {
       try {
+        this.loading = true;
         const res = await adminStudent.getStudents(params);
         this.students = res.students;
         console.log("Students", this.students);
@@ -48,6 +49,20 @@ export const useAdminStore = defineStore("admin", {
         const data = await adminStudent.updateStudent(payload, id);
         this.updatedStudent = JSON.parse(JSON.stringify(data));
         console.log("updatedStudent:", this.updatedStudent);
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async deleteStudent(id) {
+      try {
+        this.loading = true;
+        await adminStudent.deleteStudent(id);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message

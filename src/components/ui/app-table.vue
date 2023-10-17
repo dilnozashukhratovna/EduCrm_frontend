@@ -7,7 +7,12 @@
           :key="index"
           scope="col"
           class="th">
-          {{ item.title }}
+          <span v-if="item.title === 'checkbox'">
+            <input type="checkbox" class="w-[18px] h-[18px]" />
+          </span>
+          <span v-else>
+            {{ item.title }}
+          </span>
         </td>
       </tr>
     </thead>
@@ -38,7 +43,7 @@ const props = defineProps({
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300&display=swap");
 .custom-table {
   font-family: "Inter", sans-serif;
-  width: 90%;
+  width: 100%;
   margin-bottom: 50px;
 }
 
@@ -46,11 +51,11 @@ const props = defineProps({
   background-color: #12486b;
   text-align: left;
   color: white;
-  padding: 10px;
+  padding: 15px;
 }
 
 .custom-table td {
-  //padding: 5px;
+  padding: 15px;
   background: #f6fbff;
   color: #065fd4;
   font-weight: 400;

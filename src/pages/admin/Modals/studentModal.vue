@@ -25,6 +25,21 @@
       </VButton>
     </vee-form>
   </app-modal>
+  <app-modal v-model="dialog2">
+    <h1 class="ml-[40px]">Are you sure you want to delete this student?</h1>
+    <div class="mt-[30px]">
+      <button
+        class="p-[10px] w-[100px] bg-color1 text-white ml-[90px]"
+        @click="dialog2 = false">
+        CANCEL
+      </button>
+      <button
+        class="p-[10px] w-[100px] bg-[crimson] text-white ml-[30px]"
+        @click="deleteStudent">
+        DELETE
+      </button>
+    </div>
+  </app-modal>
 </template>
 
 <script setup>
@@ -33,9 +48,12 @@ import VInput from "../../../components/form/VInput.vue";
 import VButton from "../../../components/form/VButton.vue";
 import Loader from "../../../components/loader/Loader.vue";
 import { useAdminStore } from "../../../stores/admin";
+import Notification from "../../../plugins/Notification";
 import { ref, computed, reactive, watch } from "vue";
 const dialog = ref(false);
+const dialog2 = ref(false);
 const loading = ref(false);
+const studentId = ref(null);
 const store = useAdminStore();
 watch(dialog, (value) => {
   if (!value) {
@@ -74,10 +92,27 @@ const openModal = (item) => {
   dialog.value = true;
 };
 
+const openDeleteModal = (id) => {
+  console.log(id, "id");
+  if (id) {
+    studentId.value = id;
+    dialog2.value = true;
+  }
+};
+
 const send = async (values) => {
   if (!values._id) {
+    const payload = {
+      first_name: values.first_name,
+      last_name: values.last_name,
+      phone: values.phone
+        .split("")
+        .filter((char) => char === "+" || !isNaN(+char))
+        .join(""),
+    };
     loading.value = true;
-    await store.createStudent(values);
+    await store.createStudent(payload);
+    Notification("Student created!", "success");
     loading.value = false;
     dialog.value = false;
     location.reload();
@@ -85,7 +120,10 @@ const send = async (values) => {
     const payload = {
       first_name: values.first_name,
       last_name: values.last_name,
-      phone: values.phone,
+      phone: values.phone
+        .split("")
+        .filter((char) => char === "+" || !isNaN(+char))
+        .join(""),
     };
     console.log("Payload from edit:", payload);
     loading.value = true;
@@ -95,8 +133,14 @@ const send = async (values) => {
     location.reload();
   }
 };
+const deleteStudent = async () => {
+  await store.deleteStudent(studentId.value);
+  dialog2.value = false;
+  location.reload();
+  Notification("Student deleted!", "success");
+};
 
-defineExpose({ openModal });
+defineExpose({ openModal, openDeleteModal });
 </script>
 
 <style lang="scss" scoped></style>

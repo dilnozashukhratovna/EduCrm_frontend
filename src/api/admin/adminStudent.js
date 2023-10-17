@@ -15,4 +15,9 @@ export const adminStudent = {
     const url = `admin/update-student/${id}`;
     return axiosClient.put(url, payload);
   },
+
+  deleteStudent(id) {
+    const url = `admin/delete-student/${id}`;
+    return axiosClient.delete(url);
+  },
 };

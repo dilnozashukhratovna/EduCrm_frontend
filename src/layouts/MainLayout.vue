@@ -9,7 +9,7 @@
       </div>
     </div>
   </div> -->
-  <div class="w-full h-screen flex">
+  <div class="w-full h-screen flex bg-[#E7EDF0]">
     <Sidebar />
     <div class="w-full flex flex-col">
       <Header />
@@ -31,6 +31,4 @@ import Header from "@/components/header/Header.vue";
 //   // width: calc((100% - 224px));
 //   // width: 100%;
 // }
-
-
 </style>
