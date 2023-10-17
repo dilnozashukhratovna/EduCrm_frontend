@@ -20,4 +20,8 @@ export const adminStudent = {
     const url = `admin/delete-student/${id}`;
     return axiosClient.delete(url);
   },
+  getOneStudent(id) {
+    const url = `admin/get-student/${id}`;
+    return axiosClient.get(url);
+  },
 };

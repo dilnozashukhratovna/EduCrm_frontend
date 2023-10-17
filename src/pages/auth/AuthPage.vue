@@ -41,7 +41,7 @@ import { computed, ref } from "vue";
 import VInput from "@/components/form/VInput.vue";
 import VPasswordInput from "@/components/form/VPasswordInput.vue";
 import Loader from "@/components/loader/Loader.vue";
-import { useAuthStore } from "@/stores/auth";
+import { useAuthStore } from "@/stores/director/auth";
 import VButton from "@/components/form/VButton.vue";
 import Notification from "../../plugins/Notification";
 

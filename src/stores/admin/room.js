@@ -1,22 +1,23 @@
 import { defineStore } from "pinia";
-import { adminStudent } from "../api/admin/adminStudent";
-export const useAdminStore = defineStore("admin", {
+import { adminRoom } from "../../api/admin/adminRoom";
+export const useRoomStore = defineStore("room", {
   state: () => ({
-    students: null,
+    rooms: null,
     count: null,
     loading: false,
     error: null,
-    newStudent: null,
-    updatedStudent: null,
+    newRoom: null,
+    updatedRoom: null,
+    room: null,
   }),
   getters: {},
   actions: {
-    async getStudents(params) {
+    async getRooms(params) {
       try {
         this.loading = true;
-        const res = await adminStudent.getStudents(params);
-        this.students = res.students;
-        console.log("Students", this.students);
+        const res = await adminRoom.getRooms(params);
+        this.rooms = res.rooms;
+        console.log("Rooms", this.rooms);
         this.count = res.count;
         params.last_page = Math.ceil(this.count / params.limit);
       } catch (error) {
@@ -28,12 +29,12 @@ export const useAdminStore = defineStore("admin", {
         this.loading = false;
       }
     },
-    async createStudent(payload) {
+    async createRoom(payload) {
       try {
         this.loading = true;
-        const data = await adminStudent.createStudent(payload);
-        this.newStudent = JSON.parse(JSON.stringify(data));
-        console.log("NewStudent:", this.newStudent);
+        const data = await adminRoom.createRoom(payload);
+        this.newRoom = JSON.parse(JSON.stringify(data));
+        console.log("NewRoom:", this.newRoom);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
@@ -43,12 +44,12 @@ export const useAdminStore = defineStore("admin", {
         this.loading = false;
       }
     },
-    async updateStudent(payload, id) {
+    async updateRoom(payload, id) {
       try {
         this.loading = true;
-        const data = await adminStudent.updateStudent(payload, id);
-        this.updatedStudent = JSON.parse(JSON.stringify(data));
-        console.log("updatedStudent:", this.updatedStudent);
+        const data = await adminRoom.updateRoom(payload, id);
+        this.updatedRoom = JSON.parse(JSON.stringify(data));
+        console.log("updatedRoom:", this.updatedRoom);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
@@ -59,10 +60,24 @@ export const useAdminStore = defineStore("admin", {
       }
     },
 
-    async deleteStudent(id) {
+    async deleteRoom(id) {
       try {
         this.loading = true;
-        await adminStudent.deleteStudent(id);
+        await adminRoom.deleteRoom(id);
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async getOneRoom(id) {
+      try {
+        this.loading = true;
+        this.room = await adminRoom.getOneRoom(id);
+        console.log("Room from table:", this.room);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message

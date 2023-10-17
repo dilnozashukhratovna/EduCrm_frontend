@@ -1,11 +1,13 @@
 <template>
-  <StudentModal ref="studentModal" />
-  <div v-if="store.students" class="p-[30px]">
-    <div class="mb-[30px] flex justify-between items-center">
-      <h1 class="text-black font-Inter text-[22px] font-[600] uppercase">
-        students ({{ store.count }})
+  <StudentModal ref="modal_value" />
+  <div v-if="store?.students" class="p-[20px] pl-[30px]">
+    <div class="mb-[20px] flex justify-between items-center">
+      <h1 class="text-[#002842] font-Inter text-[22px] font-[600] uppercase">
+        students ({{ store?.count }})
       </h1>
-      <button @click="openModal" class="p-[10px] bg-color1 text-white w-[200px]">
+      <button
+        @click="openModal"
+        class="p-[10px] bg-color1 text-white w-[200px] rounded-full">
         create student
       </button>
     </div>
@@ -25,18 +27,17 @@
       <template #body_full_name="{ item }">
         {{ `${item.first_name} ${item.last_name}` }}
       </template>
-      <!-- =====================/BUTTONS CONFIGURATION ============== -->
-      <!-- edit-button -->
+      <!-- =====================BUTTONS CONFIGURATION ============== -->
       <template #body_action="{ item }">
-        <button @click="openEditModal(item)" class="mr-[10px] ml-[10px]">
+        <VActions :item="item" :modal_value="modal_value"></VActions>
+        <!-- <button @click="openEditModal(item)" class="mr-[10px] ml-[10px]">
           <span class="flex justify-center items-center gap-2 z-50">
             <svg-icon
               type="mdi"
-              :path="mdiPencil"
+              :path="mdiSquareEditOutline"
               class="hover:text-color1-600 z-50 text-[#fcba03]"></svg-icon>
           </span>
         </button>
-        <!-- delete-button -->
         <button @click="openDelete(item._id)">
           <span class="flex justify-center items-center gap-2 z-50">
             <svg-icon
@@ -44,7 +45,7 @@
               :path="mdiTrashCanOutline"
               class="hover:text-color1-600 z-50 text-[crimson]"></svg-icon>
           </span>
-        </button>
+        </button> -->
       </template>
     </app-table>
     <div>
@@ -63,7 +64,8 @@
 </template>
 
 <script setup>
-import { useAdminStore } from "../../stores/admin";
+import { useStudentStore } from "../../stores/admin/student";
+import VActions from "../../components/form/VActions.vue";
 import { ref, onMounted } from "vue";
 import AppTable from "../../components/ui/app-table.vue";
 import StudentModal from "./Modals/studentModal.vue";
@@ -71,15 +73,17 @@ import VPagination from "@hennge/vue3-pagination";
 import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 import Loader from "@/components/loader/Loader.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiPencil, mdiTrashCanOutline } from "@mdi/js";
+import { mdiPencil, mdiTrashCanOutline, mdiSquareEditOutline } from "@mdi/js";
 
-const store = useAdminStore();
+const store = useStudentStore();
 const studentModal = ref();
 const params = {
   page: 1,
   limit: 10,
   last_page: null,
 };
+
+const modal_value = ref("");
 const headers = ref([
   { title: "checkbox", value: "checkbox" },
   { title: "ID", value: "_id" },
@@ -92,17 +96,21 @@ const headers = ref([
 ]);
 
 const openModal = () => {
-  studentModal.value.openModal();
+  modal_value.value.openModal();
 };
 
-const openEditModal = (item) => {
-  studentModal.value.openModal(item);
-};
+// const openModal = () => {
+//   studentModal.value.openModal();
+// };
 
-const openDelete = (id) => {
-  console.log(id);
-  studentModal.value.openDeleteModal(id);
-};
+// const openEditModal = (item) => {
+//   studentModal.value.openModal(item);
+// };
+
+// const openDelete = (id) => {
+//   console.log(id);
+//   studentModal.value.openDeleteModal(id);
+// };
 
 onMounted(() => {
   store.getStudents(params);
@@ -110,7 +118,7 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-h1{
+h1 {
   align-items: spa;
 }
 </style>

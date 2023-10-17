@@ -6,20 +6,14 @@
       :initial-values="forms">
       <VInput
         type="text"
-        name="first_name"
-        label="FirstName"
-        placeholder="First name..."></VInput>
+        name="name"
+        label="RoomName"
+        placeholder="Room name..."></VInput>
       <VInput
-        type="text"
-        name="last_name"
-        label="LastName"
-        placeholder="Last name..."></VInput>
-      <VInput
-        type="text"
-        name="phone"
-        label="Phone"
-        placeholder="(+998)-90-123-45-67"
-        :mask="'(+998)-##-###-##-##'"></VInput>
+        type="number"
+        name="size"
+        label="RoomSize"
+        placeholder="Room size..."></VInput>
       <VButton btn_type="primary" :isLoading="loading" type="submit">
         {{ btn_title }}
       </VButton>
@@ -27,8 +21,8 @@
   </app-modal>
   <app-modal v-model="dialog2">
     <h1 class="ml-[40px]">
-      Are you sure you want to delete this student?
-      <!-- {{ store?.getOneStudent(studentId)?.first_name }}? -->
+      Are you sure you want to delete this room?
+      <!-- {{ store?.getOneRoom(roomId)?.first_name }}? -->
     </h1>
     <div class="mt-[30px]">
       <button
@@ -38,7 +32,7 @@
       </button>
       <button
         class="p-[10px] w-[100px] bg-[crimson] hover:bg-[#ab0518] text-white ml-[30px] rounded-full"
-        @click="deleteStudent">
+        @click="deleteRoom">
         DELETE
       </button>
     </div>
@@ -50,15 +44,15 @@ import AppModal from "../../../components/ui/app-modal.vue";
 import VInput from "../../../components/form/VInput.vue";
 import VButton from "../../../components/form/VButton.vue";
 import Loader from "../../../components/loader/Loader.vue";
-import { useStudentStore } from "../../../stores/admin/student";
+import { useRoomStore } from "../../../stores/admin/room";
 import Notification from "../../../plugins/Notification";
 import { ref, computed, reactive, watch } from "vue";
 const dialog = ref(false);
 const dialog2 = ref(false);
 const loading = ref(false);
-const studentId = ref(null);
-const store = useStudentStore();
-const student = ref(null);
+const roomId = ref(null);
+const store = useRoomStore();
+const room = ref(null);
 watch(dialog, (value) => {
   if (!value) {
     forms.value = {};
@@ -66,9 +60,8 @@ watch(dialog, (value) => {
 });
 
 let forms = ref({
-  first_name: "",
-  last_name: "",
-  phone: "",
+  name: "",
+  size: null,
 });
 
 const btn_title = computed(() => {
@@ -76,18 +69,17 @@ const btn_title = computed(() => {
     return "Loading";
   } else {
     if (forms.value.phone) {
-      return "Edit Student";
+      return "Edit Room";
     } else {
-      return "Add Student";
+      return "Add Room";
     }
   }
 });
 
 const schema = computed(() => {
   return {
-    first_name: "required|min:3|max:30",
-    last_name: "required|min:3|max:30",
-    phone: "required|phone:19",
+    name: "required|min:3|max:30",
+    size: "required|min:2|max:30",
   };
 });
 
@@ -99,59 +91,43 @@ const openModal = (item) => {
 const openDeleteModal = (id) => {
   console.log(id, "id");
   if (id) {
-    studentId.value = id;
+    roomId.value = id;
     dialog2.value = true;
   }
 };
 
 const send = async (values) => {
   if (!values._id) {
-    const payload = {
-      first_name: values.first_name,
-      last_name: values.last_name,
-      phone: values.phone
-        .split("")
-        .filter((char) => char === "+" || !isNaN(+char))
-        .join(""),
-    };
     loading.value = true;
-    await store.createStudent(payload);
-    Notification("Student created!", "success");
+    await store.createRoom(values);
+    Notification("Room created!", "success");
     loading.value = false;
     dialog.value = false;
     location.reload();
   } else {
-    const payload = {
-      first_name: values.first_name,
-      last_name: values.last_name,
-      phone: values.phone
-        .split("")
-        .filter((char) => char === "+" || !isNaN(+char))
-        .join(""),
-    };
-    console.log("Payload from edit:", payload);
+    console.log("Payload from edit:", values);
     loading.value = true;
-    await store.updateStudent(payload, forms.value._id);
+    await store.updateRoom(values, forms.value._id);
     loading.value = false;
     dialog.value = false;
     location.reload();
   }
 };
-const deleteStudent = async () => {
+const deleteRoom = async () => {
   loading.value = true;
-  // student.value = await getOneStudent();
-  // console.log("One student in delete func:", student.value);
-  await store.deleteStudent(studentId.value);
+  // room.value = await getOneRoom();
+  // console.log("One room in delete func:", room.value);
+  await store.deleteRoom(roomId.value);
   loading.value = false;
   dialog2.value = false;
   location.reload();
-  Notification("Student deleted!", "success");
+  Notification("Room deleted!", "success");
 };
 
-const getOneStudent = async () => {
+const getOneRoom = async () => {
   loading.value = true;
-  student.value = await store.getOneStudent(studentId.value);
-  console.log("One student in getOneStudent func:", student.value);
+  room.value = await store.getOneRoom(roomId.value);
+  console.log("One room in getOneRoom func:", room.value);
   loading.value = false;
   dialog2.value = false;
   // location.reload();

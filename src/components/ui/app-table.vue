@@ -7,9 +7,11 @@
           :key="index"
           scope="col"
           class="th">
-          <span v-if="item.title === 'checkbox'">
-            <input type="checkbox" class="w-[18px] h-[18px]" />
-          </span>
+          <span
+            v-if="item.title === 'checkbox'"
+            class="w-full flex justify-center items-center"
+            ><input type="checkbox" class="w-[18px] h-[18px]"
+          /></span>
           <span v-else>
             {{ item.title }}
           </span>
@@ -17,7 +19,10 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in props.body" :key="index">
+      <tr
+        v-for="(item, index) in props.body"
+        :key="index"
+        @click="getOneStudent(item._id)">
         <td v-for="(item2, index2) in props.headers" :key="index2">
           <slot :name="`body_${item2.value}`" :item="item">{{
             item[item2.value]
@@ -29,6 +34,8 @@
 </template>
 
 <script setup>
+import { useStudentStore } from "../../stores/admin/student";
+const store = useStudentStore();
 const props = defineProps({
   headers: {
     type: Array,
@@ -37,6 +44,10 @@ const props = defineProps({
     type: Array,
   },
 });
+
+const getOneStudent = async (id) => {
+  await store.getOneStudent(id);
+};
 </script>
 
 <style lang="scss" scoped>
@@ -51,13 +62,30 @@ const props = defineProps({
   background-color: #12486b;
   text-align: left;
   color: white;
-  padding: 15px;
+  padding-right: 20px;
+  padding-left: 30px;
+  padding-top: 18px;
+  padding-bottom: 13px;
+  // padding: 20px;
+  font-weight: 600;
 }
 
 .custom-table td {
-  padding: 15px;
-  background: #f6fbff;
+  text-align: left;
+  padding-right: 20px;
+  padding-left: 30px;
+  padding-top: 23px;
+  padding-bottom: 18px;
+  // padding: 20px;
   color: #065fd4;
-  font-weight: 400;
+  font-weight: 500;
+}
+
+.custom-table tr {
+  background: #f6fbff;
+}
+.custom-table tr:hover {
+  cursor: pointer;
+  background: #e5f4ff;
 }
 </style>
