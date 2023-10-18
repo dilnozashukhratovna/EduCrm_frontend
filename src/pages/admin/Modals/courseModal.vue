@@ -6,20 +6,19 @@
       :initial-values="forms">
       <VInput
         type="text"
-        name="first_name"
-        label="FirstName"
-        placeholder="First name..."></VInput>
+        name="name"
+        label="CourseName"
+        placeholder="Course name..."></VInput>
       <VInput
-        type="text"
-        name="last_name"
-        label="LastName"
-        placeholder="Last name..."></VInput>
+        type="number"
+        name="price"
+        label="CoursePrice"
+        placeholder="Course price..."></VInput>
       <VInput
-        type="text"
-        name="phone"
-        label="Phone"
-        placeholder="(+998)-90-123-45-67"
-        :mask="'(+998)-##-###-##-##'"></VInput>
+        type="number"
+        name="period"
+        label="CoursePeriod"
+        placeholder="Course period..."></VInput>
       <VButton btn_type="primary" :isLoading="loading" type="submit">
         {{ btn_title }}
       </VButton>
@@ -27,8 +26,8 @@
   </app-modal>
   <app-modal v-model="dialog2">
     <h1 class="ml-[40px]">
-      Are you sure you want to delete this student?
-      <!-- {{ store?.getOneStudent(studentId)?.first_name }}? -->
+      Are you sure you want to delete this course?
+      <!-- {{ store?.getOneCourse(courseId)?.first_name }}? -->
     </h1>
     <div class="mt-[30px]">
       <button
@@ -38,7 +37,7 @@
       </button>
       <button
         class="p-[10px] w-[100px] bg-[crimson] hover:bg-[#ab0518] text-white ml-[30px] rounded-full"
-        @click="deleteStudent">
+        @click="deleteCourse">
         DELETE
       </button>
     </div>
@@ -50,15 +49,15 @@ import AppModal from "../../../components/ui/app-modal.vue";
 import VInput from "../../../components/form/VInput.vue";
 import VButton from "../../../components/form/VButton.vue";
 import Loader from "../../../components/loader/Loader.vue";
-import { useStudentStore } from "../../../stores/admin/student";
+import { useCourseStore } from "../../../stores/admin/course";
 import Notification from "../../../plugins/Notification";
 import { ref, computed, reactive, watch } from "vue";
 const dialog = ref(false);
 const dialog2 = ref(false);
 const loading = ref(false);
-const studentId = ref(null);
-const store = useStudentStore();
-const student = ref(null);
+const courseId = ref(null);
+const store = useCourseStore();
+const course = ref(null);
 watch(dialog, (value) => {
   if (!value) {
     forms.value = {};
@@ -66,9 +65,9 @@ watch(dialog, (value) => {
 });
 
 let forms = ref({
-  first_name: "",
-  last_name: "",
-  phone: "",
+  name: "",
+  price: null,
+  period: null,
 });
 
 const btn_title = computed(() => {
@@ -76,18 +75,18 @@ const btn_title = computed(() => {
     return "Loading";
   } else {
     if (forms.value._id) {
-      return "Edit Student";
+      return "Edit Course";
     } else {
-      return "Add Student";
+      return "Add Course";
     }
   }
 });
 
 const schema = computed(() => {
   return {
-    first_name: "required|min:3|max:30",
-    last_name: "required|min:3|max:30",
-    phone: "required|phone:19",
+    name: "required|min:3|max:30",
+    price: "required|min:2|max:30",
+    period: "required|min:1|max:30",
   };
 });
 
@@ -99,59 +98,43 @@ const openModal = (item) => {
 const openDeleteModal = (id) => {
   console.log(id, "id");
   if (id) {
-    studentId.value = id;
+    courseId.value = id;
     dialog2.value = true;
   }
 };
 
 const send = async (values) => {
   if (!values._id) {
-    const payload = {
-      first_name: values.first_name,
-      last_name: values.last_name,
-      phone: values.phone
-        .split("")
-        .filter((char) => char === "+" || !isNaN(+char))
-        .join(""),
-    };
     loading.value = true;
-    await store.createStudent(payload);
-    Notification("Student created!", "success");
+    await store.createCourse(values);
+    Notification("Course created!", "success");
     loading.value = false;
     dialog.value = false;
     location.reload();
   } else {
-    const payload = {
-      first_name: values.first_name,
-      last_name: values.last_name,
-      phone: values.phone
-        .split("")
-        .filter((char) => char === "+" || !isNaN(+char))
-        .join(""),
-    };
-    console.log("Payload from edit:", payload);
+    console.log("Payload from edit:", values);
     loading.value = true;
-    await store.updateStudent(payload, forms.value._id);
+    await store.updateCourse(values, forms.value._id);
     loading.value = false;
     dialog.value = false;
     location.reload();
   }
 };
-const deleteStudent = async () => {
+const deleteCourse = async () => {
   loading.value = true;
-  // student.value = await getOneStudent();
-  // console.log("One student in delete func:", student.value);
-  await store.deleteStudent(studentId.value);
+  // course.value = await getOneCourse();
+  // console.log("One course in delete func:", course.value);
+  await store.deleteCourse(courseId.value);
   loading.value = false;
   dialog2.value = false;
   location.reload();
-  Notification("Student deleted!", "success");
+  Notification("Course deleted!", "success");
 };
 
-const getOneStudent = async () => {
+const getOneCourse = async () => {
   loading.value = true;
-  student.value = await store.getOneStudent(studentId.value);
-  console.log("One student in getOneStudent func:", student.value);
+  course.value = await store.getOneCourse(courseId.value);
+  console.log("One course in getOneCourse func:", course.value);
   loading.value = false;
   dialog2.value = false;
   // location.reload();

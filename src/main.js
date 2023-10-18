@@ -5,11 +5,11 @@ import { createPinia } from "pinia";
 import App from "./App.vue";
 import router from "./router";
 import veeValidatePlugins from "@/plugins/vee-validate.js";
-
 import VueMask from "vue-the-mask";
-
 import Vue3Toasity, { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
+import ElementPlus from "element-plus";
+import "element-plus/dist/index.css";
 
 const app = createApp(App);
 
@@ -22,5 +22,6 @@ app.use(Vue3Toasity, {
   position: toast.POSITION.TOP_RIGHT,
   theme: "colored",
 });
+app.use(ElementPlus);
 
 app.mount("#app");

@@ -68,7 +68,7 @@ const btn_title = computed(() => {
   if (loading.value) {
     return "Loading";
   } else {
-    if (forms.value.phone) {
+    if (forms.value._id) {
       return "Edit Room";
     } else {
       return "Add Room";

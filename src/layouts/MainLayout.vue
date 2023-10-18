@@ -9,7 +9,7 @@
       </div>
     </div>
   </div> -->
-  <div class="w-full h-screen flex bg-[#E7EDF0]">
+  <div class="w-full h-screen flex bg-[#E7EDF0] overflow-x-auto">
     <Sidebar />
     <div class="w-full flex flex-col">
       <Header />
