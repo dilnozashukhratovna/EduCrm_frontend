@@ -64,7 +64,7 @@
       </template>
       <!-- =====================BUTTONS CONFIGURATION ============== -->
       <template #body_action="{ item }">
-        <VActions :item="item" :modal_value="modal_value"></VActions>
+        <VActions :item="item" :modal_value="modal_value" path="/single_group"></VActions>
       </template>
     </app-table>
     <div>

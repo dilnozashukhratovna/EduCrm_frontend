@@ -28,6 +28,14 @@ export default {
       name: "courses",
       component: () => import("@/pages/admin/CoursePage.vue"),
     },
+    {
+      path: "/single_group/:id",
+      name: "single_group",
+      meta: {
+        child: "single_group",
+      },
+      component: () => import("@/pages/admin/SingleGroupPage.vue"),
+    },
   ],
   meta: {
     requiresAuth: true,

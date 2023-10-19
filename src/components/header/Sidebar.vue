@@ -9,9 +9,12 @@
       class="w-[223px] bg-color1 pt-[70px] inset-y-0 fixed left-0 z-10 overflow-y-auto duration-300 lg:translate-x-0 lg:static">
       <span v-for="(item, index) in AdminMenu" :key="index">
         <router-link
-          :class="index === 0 ? 'border-t' : ''"
           class="flex justify-start gap-4 items-center font-normal text-white text-[20px] pl-[30px] py-[15px] select-none transition-all duration-200"
           active-class="active-link"
+          :class="{
+            'active-link': $route.meta.child === `${item.keys}`,
+            'border-t': index === 0,
+          }"
           :to="item.path"
           ><Icon type="mdi" :path="item.icon" class="text-[20px]"></Icon>
           {{ item.label }}</router-link

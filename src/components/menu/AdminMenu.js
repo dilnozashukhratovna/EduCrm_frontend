@@ -19,6 +19,7 @@ export const AdminMenu = [
     path: "/groups",
     name: "groups",
     label: "Groups",
+    keys: "single_group",
     icon: mdiAccountGroup,
   },
   {
