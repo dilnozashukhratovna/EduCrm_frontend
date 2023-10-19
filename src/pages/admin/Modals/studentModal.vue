@@ -26,22 +26,10 @@
     </vee-form>
   </app-modal>
   <app-modal v-model="dialog2">
-    <h1 class="ml-[40px]">
-      Are you sure you want to delete this student?
-      <!-- {{ store?.getOneStudent(studentId)?.first_name }}? -->
-    </h1>
-    <div class="mt-[30px]">
-      <button
-        class="p-[10px] w-[100px] bg-color1 hover:bg-[#073452] text-white ml-[90px] rounded-full"
-        @click="dialog2 = false">
-        CANCEL
-      </button>
-      <button
-        class="p-[10px] w-[100px] bg-[crimson] hover:bg-[#ab0518] text-white ml-[30px] rounded-full"
-        @click="deleteStudent">
-        DELETE
-      </button>
-    </div>
+    <VDelete
+      v-model="dialog2"
+      :delete-function="deleteStudent"
+      name="student" />
   </app-modal>
 </template>
 
@@ -53,6 +41,7 @@ import Loader from "../../../components/loader/Loader.vue";
 import { useStudentStore } from "../../../stores/admin/student";
 import Notification from "../../../plugins/Notification";
 import { ref, computed, reactive, watch } from "vue";
+import VDelete from "../../../components/form/VDelete.vue";
 const dialog = ref(false);
 const dialog2 = ref(false);
 const loading = ref(false);

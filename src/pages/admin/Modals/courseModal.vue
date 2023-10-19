@@ -25,22 +25,7 @@
     </vee-form>
   </app-modal>
   <app-modal v-model="dialog2">
-    <h1 class="ml-[40px]">
-      Are you sure you want to delete this course?
-      <!-- {{ store?.getOneCourse(courseId)?.first_name }}? -->
-    </h1>
-    <div class="mt-[30px]">
-      <button
-        class="p-[10px] w-[100px] bg-color1 hover:bg-[#073452] text-white ml-[90px] rounded-full"
-        @click="dialog2 = false">
-        CANCEL
-      </button>
-      <button
-        class="p-[10px] w-[100px] bg-[crimson] hover:bg-[#ab0518] text-white ml-[30px] rounded-full"
-        @click="deleteCourse">
-        DELETE
-      </button>
-    </div>
+    <VDelete v-model="dialog2" :delete-function="deleteCourse" name="course" />
   </app-modal>
 </template>
 
@@ -49,6 +34,7 @@ import AppModal from "../../../components/ui/app-modal.vue";
 import VInput from "../../../components/form/VInput.vue";
 import VButton from "../../../components/form/VButton.vue";
 import Loader from "../../../components/loader/Loader.vue";
+import VDelete from "../../../components/form/VDelete.vue";
 import { useCourseStore } from "../../../stores/admin/course";
 import Notification from "../../../plugins/Notification";
 import { ref, computed, reactive, watch } from "vue";

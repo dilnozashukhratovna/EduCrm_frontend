@@ -6,6 +6,7 @@ module.exports = {
       colors: {
         color1: "#12486B",
         color_bg: "#E7EDF0",
+        error_color: "crimson",
       },
     },
   },

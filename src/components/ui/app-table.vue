@@ -19,10 +19,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr
-        v-for="(item, index) in props.body"
-        :key="index"
-        @click="getOneStudent(item._id)">
+      <tr v-for="(item, index) in props.body" :key="index">
         <td v-for="(item2, index2) in props.headers" :key="index2">
           <slot :name="`body_${item2.value}`" :item="item">{{
             item[item2.value]
@@ -44,10 +41,6 @@ const props = defineProps({
     type: Array,
   },
 });
-
-const getOneStudent = async (id) => {
-  await store.getOneStudent(id);
-};
 </script>
 
 <style lang="scss" scoped>
@@ -74,8 +67,8 @@ const getOneStudent = async (id) => {
   text-align: left;
   padding-right: 20px;
   padding-left: 30px;
-  padding-top: 23px;
-  padding-bottom: 18px;
+  padding-top: 20px;
+  padding-bottom: 15px;
   // padding: 20px;
   color: #065fd4;
   font-weight: 500;
@@ -86,6 +79,6 @@ const getOneStudent = async (id) => {
 }
 .custom-table tr:hover {
   cursor: pointer;
-  background: #e5f4ff;
+  background: #e8f4fd;
 }
 </style>

@@ -1,47 +1,67 @@
 <template>
   <app-modal v-model="dialog">
-    <div class="block">
-      <el-date-picker
-        v-model="value2"
-        type="date"
-        placeholder="Start date"
-        :default-value="new Date()"
-        @change="handleChangeData($event)" />
-    </div>
-    <div class="demo-range">
-      <el-time-picker
-        v-model="value1"
-        is-range
-        range-separator="To"
-        start-placeholder="Start time"
-        end-placeholder="End time"
-        @change="handleChangeTime($event)" />
-    </div>
     <div>
-      <select @click="change(e)">
-        <option value="" selected hidden>Select days</option>
-        <option value="odd">Odd days</option>
-        <option value="even">Even days</option>
-      </select>
+      <div v-if="store2.courses">
+        <select class="m-3 border-2" v-model="groupPayload.course_id">
+          <option value="" selected hidden>Select course</option>
+          <option
+            :value="item._id"
+            v-for="(item, index) in store2.courses"
+            :key="index">
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <input
+        type="text"
+        v-model="groupPayload.name"
+        placeholder="Name"
+        class="border-2 mb-3" />
+      <div class="block">
+        <el-date-picker
+          v-model="value2"
+          type="date"
+          placeholder="Start date"
+          :default-value="new Date()"
+          @change="handleChangeData($event)" />
+      </div>
+      <div>
+        <select @change="handleChangeDays($event)" class="m-3 border-2">
+          <option value="" selected hidden>Select days</option>
+          <option value="odd">Odd days</option>
+          <option value="even">Even days</option>
+        </select>
+      </div>
+      <div class="demo-range">
+        <el-time-picker
+          v-model="value1"
+          is-range
+          range-separator="To"
+          start-placeholder="Start time"
+          end-placeholder="End time"
+          @change="handleChangeTime($event)" />
+      </div>
+      <div v-if="store.availableRooms">
+        <select class="m-3 border-2" v-model="groupPayload.room_id">
+          <option value="" selected hidden>Select room</option>
+          <option
+            :value="item._id"
+            v-for="(item, index) in store?.availableRooms"
+            :key="index">
+            {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <br />
+      <button @click="send" class="border-2">Send</button>
     </div>
   </app-modal>
+  <!-- ===========DELETE MODAL======================= -->
   <app-modal v-model="dialog2">
-    <h1 class="ml-[40px]">
-      Are you sure you want to delete this group?
-      <!-- {{ store?.getOneGroup(groupId)?.first_name }}? -->
-    </h1>
-    <div class="mt-[30px]">
-      <button
-        class="p-[10px] w-[100px] bg-color1 hover:bg-[#073452] text-white ml-[90px] rounded-full"
-        @click="dialog2 = false">
-        CANCEL
-      </button>
-      <button
-        class="p-[10px] w-[100px] bg-[crimson] hover:bg-[#ab0518] text-white ml-[30px] rounded-full"
-        @click="deleteGroup">
-        DELETE
-      </button>
-    </div>
+    <VDelete
+      v-model="dialog2"
+      :delete-function="deleteGroup"
+      name="group"></VDelete>
   </app-modal>
 </template>
 
@@ -50,7 +70,9 @@ import AppModal from "../../../components/ui/app-modal.vue";
 import VInput from "../../../components/form/VInput.vue";
 import VButton from "../../../components/form/VButton.vue";
 import Loader from "../../../components/loader/Loader.vue";
+import VDelete from "../../../components/form/VDelete.vue";
 import { useGroupStore } from "../../../stores/admin/group";
+import { useCourseStore } from "../../../stores/admin/course";
 import Notification from "../../../plugins/Notification";
 import { ref, computed, reactive, watch } from "vue";
 import moment from "moment";
@@ -59,12 +81,17 @@ const dialog2 = ref(false);
 const loading = ref(false);
 const groupId = ref(null);
 const store = useGroupStore();
+const store2 = useCourseStore();
 const group = ref(null);
-const values = reactive({
+const groupPayload = reactive({
+  name: "",
   start_date: "",
-  start_time: "",
-  end_time: "",
   days: true,
+  start_time: null,
+  end_time: null,
+  room_id: "",
+  course_id: "",
+  status: true,
 });
 const value1 = ref([new Date(), new Date()]);
 const value2 = ref("");
@@ -88,25 +115,27 @@ const btn_title = computed(() => {
   }
 });
 
-const change = (e) => {
-  console.log(e);
+const handleChangeDays = (e) => {
+  if (e.target.value == "odd") groupPayload.days = true;
+  else groupPayload.days = false;
 };
 
-const handleChangeTime = (e) => {
-  //   console.log(e[0].toLocaleTimeString());
-  //   console.log(e[1].toLocaleTimeString());
-  //   values.start_time = e[0].toLocaleTimeString();
-  //   values.end_time = e[1].toLocaleTimeString();
+const handleChangeTime = async (e) => {
   let a = e[0].getHours();
   let b = e[0].getMinutes();
   let c = e[1].getHours();
   let d = e[1].getMinutes();
-  values.start_time = a * 60 + b;
-  values.end_time = c * 60 + d;
+  groupPayload.start_time = a * 60 + b;
+  groupPayload.end_time = c * 60 + d;
+  await store.availableAdminRooms({
+    start_date: groupPayload.start_date,
+    start_time: groupPayload.start_time,
+    end_time: groupPayload.end_time,
+    days: groupPayload.days,
+  });
 };
 const handleChangeData = (e) => {
-  values.start_date = moment(e).format("YYYY-MM-DD");
-  //   console.log(moment(e).format("YYYY-MM-DD"));
+  groupPayload.start_date = moment(e).format("YYYY-MM-DD");
 };
 
 // const schema = computed(() => {
@@ -130,21 +159,27 @@ const openDeleteModal = (id) => {
 };
 
 const send = async (values) => {
-  if (!values._id) {
-    loading.value = true;
-    await store.createGroup(values);
-    Notification("Group created!", "success");
-    loading.value = false;
-    dialog.value = false;
-    location.reload();
-  } else {
-    console.log("Payload from edit:", values);
-    loading.value = true;
-    await store.updateGroup(values, forms.value._id);
-    loading.value = false;
-    dialog.value = false;
-    location.reload();
-  }
+  // if (!values._id) {
+  //   loading.value = true;
+  //   await store.createGroup(groupPayload);
+  //   Notification("Group created!", "success");
+  //   loading.value = false;
+  //   dialog.value = false;
+  //   location.reload();
+  // } else {
+  //   console.log("Payload from edit:", values);
+  //   loading.value = true;
+  //   await store.updateGroup(values, forms.value._id);
+  //   loading.value = false;
+  //   dialog.value = false;
+  //   location.reload();
+  // }
+  loading.value = true;
+  await store.createGroup(groupPayload);
+  Notification("Group created!", "success");
+  loading.value = false;
+  dialog.value = false;
+  location.reload();
 };
 const deleteGroup = async () => {
   loading.value = true;

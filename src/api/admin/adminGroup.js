@@ -24,4 +24,9 @@ export const adminGroup = {
     const url = `groups/${id}`;
     return axiosClient.get(url);
   },
+
+  availableAdminRooms(payload) {
+    const url = `groups/available-rooms`;
+    return axiosClient.post(url, payload);
+  },
 };

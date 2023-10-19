@@ -20,22 +20,7 @@
     </vee-form>
   </app-modal>
   <app-modal v-model="dialog2">
-    <h1 class="ml-[40px]">
-      Are you sure you want to delete this room?
-      <!-- {{ store?.getOneRoom(roomId)?.first_name }}? -->
-    </h1>
-    <div class="mt-[30px]">
-      <button
-        class="p-[10px] w-[100px] bg-color1 hover:bg-[#073452] text-white ml-[90px] rounded-full"
-        @click="dialog2 = false">
-        CANCEL
-      </button>
-      <button
-        class="p-[10px] w-[100px] bg-[crimson] hover:bg-[#ab0518] text-white ml-[30px] rounded-full"
-        @click="deleteRoom">
-        DELETE
-      </button>
-    </div>
+    <VDelete v-model="dialog2" :delete-function="deleteRoom" name="room" />
   </app-modal>
 </template>
 
@@ -46,6 +31,7 @@ import VButton from "../../../components/form/VButton.vue";
 import Loader from "../../../components/loader/Loader.vue";
 import { useRoomStore } from "../../../stores/admin/room";
 import Notification from "../../../plugins/Notification";
+import VDelete from "../../../components/form/VDelete.vue";
 import { ref, computed, reactive, watch } from "vue";
 const dialog = ref(false);
 const dialog2 = ref(false);
@@ -98,12 +84,17 @@ const openDeleteModal = (id) => {
 
 const send = async (values) => {
   if (!values._id) {
-    loading.value = true;
-    await store.createRoom(values);
-    Notification("Room created!", "success");
-    loading.value = false;
-    dialog.value = false;
-    location.reload();
+    try {
+      loading.value = true;
+      await store.createRoom(values);
+      Notification("Room created!", "success");
+      loading.value = false;
+      dialog.value = false;
+      location.reload();
+    } catch (error) {
+      console.log("Error in creating room in roomModal:", error);
+      Notification("Error occured!", "success");
+    }
   } else {
     console.log("Payload from edit:", values);
     loading.value = true;

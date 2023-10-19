@@ -9,6 +9,7 @@ export const useGroupStore = defineStore("group", {
     newGroup: null,
     updatedGroup: null,
     group: null,
+    availableRooms: null,
   }),
   getters: {},
   actions: {
@@ -83,6 +84,20 @@ export const useGroupStore = defineStore("group", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async availableAdminRooms(payload) {
+      try {
+        this.loading = true;
+        this.availableRooms = await adminGroup.availableAdminRooms(payload);
+        console.log("Available rooms:", this.availableRooms);
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log("Error in availableRooms func in store", error);
       } finally {
         this.loading = false;
       }

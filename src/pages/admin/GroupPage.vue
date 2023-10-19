@@ -35,7 +35,7 @@
       </template>
       <!-- ===================== DAYS ====================== -->
       <template #body_days="{ item }">
-        <div v-if="item.days" class="flex gap-2">
+        <div v-if="item?.days" class="flex gap-2">
           <span>Mon</span>
           <span>Wed</span>
           <span>Fri</span>
@@ -48,15 +48,19 @@
       </template>
       <!-- ===================== START DATE ====================== -->
       <template #body_start_date="{ item }">
-        <span>{{ formatData(item.start_date) }}</span>
+        <span>{{ formatData(item?.start_date) }}</span>
+      </template>
+      <!-- ===================== END DATE ====================== -->
+      <template #body_end_date="{ item }">
+        <span>{{ formatData(item?.end_date) }}</span>
       </template>
       <!-- ===================== START TIME ====================== -->
       <template #body_start_time="{ item }">
-        <span>{{ formatTime(item.start_time) }}</span>
+        <span>{{ formatTime(item?.start_time) }}</span>
       </template>
       <!-- ===================== END TIME ====================== -->
       <template #body_end_time="{ item }">
-        <span>{{ formatTime(item.end_time) }}</span>
+        <span>{{ formatTime(item?.end_time) }}</span>
       </template>
       <!-- =====================BUTTONS CONFIGURATION ============== -->
       <template #body_action="{ item }">
@@ -80,6 +84,7 @@
 
 <script setup>
 import { useGroupStore } from "../../stores/admin/group";
+import { useCourseStore } from "../../stores/admin/course";
 import VActions from "../../components/form/VActions.vue";
 import { ref, onMounted } from "vue";
 import AppTable from "../../components/ui/app-table.vue";
@@ -92,6 +97,7 @@ import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiPencil, mdiTrashCanOutline, mdiSquareEditOutline } from "@mdi/js";
 
 const store = useGroupStore();
+const store2 = useCourseStore();
 const groupModal = ref();
 const params = {
   page: 1,
@@ -105,6 +111,7 @@ const headers = ref([
   // { title: "ID", value: "_id" },
   { title: "GROUP NAME", value: "name" },
   { title: "START DATE", value: "start_date" },
+  { title: "END DATE", value: "end_date" },
   { title: "DAYS", value: "days" },
   { title: "START TIME", value: "start_time" },
   { title: "END TIME", value: "end_time" },
@@ -118,11 +125,10 @@ const formatData = (data) => {
   return moment(data).format("YYYY-MM-DD");
 };
 const formatTime = (time) => {
-  let hours = Math.floor(time / 60);
-  let minutes = time % 60;
-  let formattedHours = `${hours}`.padStart(2, "0");
-  let formattedMinutes = `${minutes}`.padStart(2, "0");
-  return `${formattedHours}:${formattedMinutes}`;
+  let hour = `${parseInt(time / 60)}`.padStart(2, 0);
+  let minute = `${time % 60}`.padStart(2, 0);
+  let result = `${hour}:${minute}`;
+  return result;
 };
 const openModal = () => {
   modal_value.value.openModal();
@@ -130,6 +136,7 @@ const openModal = () => {
 
 onMounted(() => {
   store.getGroups(params);
+  store2.getCourses(params);
 });
 </script>
 
