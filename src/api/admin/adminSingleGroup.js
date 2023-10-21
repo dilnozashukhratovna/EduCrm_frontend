@@ -1,4 +1,4 @@
-import axiosClient from "@/api/apiClient";
+import axiosClient from "../axios/apiClient";
 
 export const adminGroupStudent = {
   getGroupStudents(params) {

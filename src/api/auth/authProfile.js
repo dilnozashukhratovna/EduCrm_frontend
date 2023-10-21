@@ -1,4 +1,5 @@
-import axiosClient from "../apiClient";
+import axiosClient from "@/api/axios/apiClient";
+
 
 export const authProfile = {
   getProfile() {

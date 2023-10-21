@@ -46,6 +46,7 @@
 <script setup>
 import { useAuthStore } from "../../stores/auth";
 import VButton from "../../components/form/VButton.vue";
+// @ts-ignore
 import profileModal from "./Modals/profileModal.vue";
 // import { useUserProfileStore } from "../../stores/admin/profile";
 import { onMounted, ref } from "vue";
