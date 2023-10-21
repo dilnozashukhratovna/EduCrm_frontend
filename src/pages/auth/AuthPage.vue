@@ -41,7 +41,7 @@ import { computed, ref } from "vue";
 import VInput from "@/components/form/VInput.vue";
 import VPasswordInput from "@/components/form/VPasswordInput.vue";
 import Loader from "@/components/loader/Loader.vue";
-import { useAuthStore } from "@/stores/director/auth";
+import { useAuthStore } from "../../stores/auth";
 import VButton from "@/components/form/VButton.vue";
 import Notification from "../../plugins/Notification";
 
@@ -49,7 +49,7 @@ const authStore = useAuthStore();
 const schema = computed(() => {
   return {
     phone: "required|phone:19",
-    password: "required|min:6|max:15",
+    password: "required|min:3|max:15",
   };
 });
 

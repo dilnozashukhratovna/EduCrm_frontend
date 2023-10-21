@@ -23,27 +23,23 @@
       <template #body_id="{ item }">
         <span>{{ item._id }}</span>
       </template>
-      <!-- ===================== ROOM ID ====================== -->
-      <template #body_room_id="{ item }">
-        <span v-if="item?.room_id === null">Not choosen</span>
-        <span v-else>{{ item?.room_id?.name }}</span>
+      <!-- ===================== ROOM  ====================== -->
+      <template #body_room="{ item }">
+        <span v-if="item?.room === null">Not choosen</span>
+        <span v-else>{{ item?.room?.name }}</span>
       </template>
       <!-- ===================== COURSE ID ====================== -->
-      <template #body_course_id="{ item }">
-        <span v-if="item?.course_id === null">Not choosen</span>
-        <span v-else>{{ item?.course_id?.name }}</span>
+      <template #body_course="{ item }">
+        <span v-if="item?.course === null">Not choosen</span>
+        <span v-else>{{ item?.course?.name }}</span>
       </template>
       <!-- ===================== DAYS ====================== -->
       <template #body_days="{ item }">
         <div v-if="item?.days" class="flex gap-2">
-          <span>Mon</span>
-          <span>Wed</span>
-          <span>Fri</span>
+          <span>Mon/Wed/Fri</span>
         </div>
         <div v-else class="flex gap-2">
-          <span>Tue</span>
-          <span>Thu</span>
-          <span>Sat</span>
+          <span>Tue/Thu/Sat</span>
         </div>
       </template>
       <!-- ===================== START DATE ====================== -->
@@ -64,7 +60,10 @@
       </template>
       <!-- =====================BUTTONS CONFIGURATION ============== -->
       <template #body_action="{ item }">
-        <VActions :item="item" :modal_value="modal_value" path="/single_group"></VActions>
+        <VActions
+          :item="item"
+          :modal_value="modal_value"
+          path="/single_group"></VActions>
       </template>
     </app-table>
     <div>
@@ -115,9 +114,9 @@ const headers = ref([
   { title: "DAYS", value: "days" },
   { title: "START TIME", value: "start_time" },
   { title: "END TIME", value: "end_time" },
-  { title: "ROOM NAME", value: "room_id" },
+  { title: "ROOM NAME", value: "room" },
   { title: "STATUS", value: "status" },
-  { title: "COURSE NAME", value: "course_id" },
+  { title: "COURSE NAME", value: "course" },
   { title: "ACTION", value: "action" },
 ]);
 

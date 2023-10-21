@@ -55,21 +55,21 @@ const props = defineProps({
   background-color: #12486b;
   text-align: left;
   color: white;
-  padding-right: 20px;
-  padding-left: 30px;
-  padding-top: 18px;
-  padding-bottom: 13px;
-  // padding: 20px;
+  // padding-right: 20px;
+  // padding-left: 30px;
+  // padding-top: 18px;
+  // padding-bottom: 13px;
+  padding: 16px;
   font-weight: 600;
 }
 
 .custom-table td {
   text-align: left;
-  padding-right: 20px;
-  padding-left: 30px;
-  padding-top: 20px;
-  padding-bottom: 15px;
-  // padding: 20px;
+  // padding-right: 20px;
+  // padding-left: 30px;
+  // padding-top: 20px;
+  // padding-bottom: 15px;
+  padding: 16px;
   color: #065fd4;
   font-weight: 500;
 }

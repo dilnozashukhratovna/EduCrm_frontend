@@ -108,7 +108,7 @@ const send = async (values) => {
     Notification("Student created!", "success");
     loading.value = false;
     dialog.value = false;
-    location.reload();
+    // location.reload();
   } else {
     const payload = {
       first_name: values.first_name,

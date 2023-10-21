@@ -21,7 +21,7 @@ export default {
     {
       path: "/profile",
       name: "profile",
-      component: () => import("@/pages/admin/ProfilePage.vue"),
+      component: () => import("../pages/global/ProfilePage.vue"),
     },
     {
       path: "/courses",
