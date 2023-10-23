@@ -1,5 +1,13 @@
 <template>
   <app-modal v-model="dialog">
+    <h1
+      class="text-center text-[30px] text-color1 font-[500] mb-[30px]"
+      v-if="!forms._id">
+      Create room
+    </h1>
+    <h1 class="text-center text-[30px] text-color1 font-[500] mb-[30px]" v-else>
+      Edit room
+    </h1>
     <vee-form
       :validation-schema="schema"
       @submit="send"
@@ -15,7 +23,7 @@
         label="RoomSize"
         placeholder="Room size..."></VInput>
       <VButton btn_type="primary" :isLoading="loading" type="submit">
-        {{ btn_title }}
+        send
       </VButton>
     </vee-form>
   </app-modal>
@@ -50,18 +58,6 @@ let forms = ref({
   size: null,
 });
 
-const btn_title = computed(() => {
-  if (loading.value) {
-    return "Loading";
-  } else {
-    if (forms.value._id) {
-      return "Edit Room";
-    } else {
-      return "Add Room";
-    }
-  }
-});
-
 const schema = computed(() => {
   return {
     name: "required|min:3|max:30",
@@ -93,7 +89,7 @@ const send = async (values) => {
       location.reload();
     } catch (error) {
       console.log("Error in creating room in roomModal:", error);
-      Notification("Error occured!", "success");
+      Notification("Error occured!", "danger");
     }
   } else {
     console.log("Payload from edit:", values);

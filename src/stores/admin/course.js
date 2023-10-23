@@ -19,7 +19,7 @@ export const useCourseStore = defineStore("course", {
         this.courses = res.courses;
         console.log("Courses", this.courses);
         this.count = res.count;
-        params.last_page = Math.ceil(this.count / params.limit);
+        params.last_page = Math.ceil(this.count / params?.limit);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message

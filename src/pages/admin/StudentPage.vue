@@ -19,6 +19,21 @@
           ><input type="checkbox" class="w-[18px] h-[18px]"
         /></span>
       </template>
+       <!-- ===================== IMAGE ============== -->
+       <template #body_image="{ item }">
+        <span class="w-full flex items-center">
+          <img
+            v-if="item?.image == null"
+            src="../../assets/images/avatar.jpeg"
+            alt=""
+            class="w-[50px] h-[50px] rounded-full" />
+          <img
+            v-else
+            :src="item?.image"
+            alt=""
+            class="w-[50px] h-[50px] rounded-full" />
+        </span>
+      </template>
       <!-- ===================== ID ====================== -->
       <template #body_id="{ item }">
         <span>{{ item._id }}</span>
@@ -86,6 +101,7 @@ const params = {
 const modal_value = ref("");
 const headers = ref([
   { title: "checkbox", value: "checkbox" },
+  { title: "IMAGE", value: "image" },
   { title: "ID", value: "_id" },
   { title: "FULL NAME", value: "full_name" },
   { title: "PHONE NUMBER", value: "phone" },
@@ -118,7 +134,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-h1 {
-  align-items: spa;
-}
+
 </style>

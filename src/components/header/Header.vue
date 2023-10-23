@@ -32,7 +32,7 @@
           :path="mdiAccountOutline"
           class="text-[#002842]"></svg-icon>
       </span>
-      <span class="text-white text-[18px] font-thin">Admin</span>
+      <span class="text-white text-[18px] font-thin">{{ name }}</span>
       <svg-icon
         type="mdi"
         :path="mdiChevronDown"
@@ -51,9 +51,14 @@ import {
   mdiChevronLeft,
   mdiMenu,
 } from "@mdi/js";
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { UseSidebar } from "../../hooks/UseSidebar";
 const { isOpen } = UseSidebar();
+const role = localStorage.getItem("role");
+const name = computed(() => {
+  if (role == "admin") return "Admin";
+  else if (role == "director") return "Director";
+});
 
 const open = ref(false);
 const rotate = (e) => {

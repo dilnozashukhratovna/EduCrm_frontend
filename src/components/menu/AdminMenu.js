@@ -4,7 +4,6 @@ import {
   mdiDoorOpen,
   mdiCog,
   mdiDoor,
-  mdiDoorClosed,
   mdiGolf,
 } from "@mdi/js";
 
@@ -26,7 +25,7 @@ export const AdminMenu = [
     path: "/rooms",
     name: "rooms",
     label: "Rooms",
-    icon: mdiDoor,
+    icon: mdiDoorOpen,
   },
   {
     path: "/profile",

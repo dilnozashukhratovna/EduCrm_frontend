@@ -1,7 +1,7 @@
 import axiosClient from "../axios/apiClient";
 
 export const adminGroupStudent = {
-  getGroupStudents(params) {
+  getGroupStudents(params={}) {
     const url = `group-students/all/q?page=${params.page}&limit=${params.limit}`;
     return axiosClient.get(url);
   },

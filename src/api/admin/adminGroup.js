@@ -1,7 +1,7 @@
 import axiosClient from "../axios/apiClient";
 
 export const adminGroup = {
-  getGroups(params) {
+  getGroups(params={}) {
     const url = `groups/all/q?page=${params.page}&limit=${params.limit}`;
     return axiosClient.get(url);
   },

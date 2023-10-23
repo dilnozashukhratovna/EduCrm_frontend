@@ -2,7 +2,7 @@ import axiosClient from "../axios/apiClient";
 
 
 export const adminCourse = {
-  getCourses(params) {
+  getCourses(params={}) {
     const url = `courses/all/q?page=${params.page}&limit=${params.limit}`;
     return axiosClient.get(url);
   },

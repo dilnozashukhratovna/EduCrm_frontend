@@ -96,7 +96,5 @@ onMounted(() => {
 </script>
 
 <style lang="scss" scoped>
-h1 {
-  align-items: spa;
-}
+
 </style>

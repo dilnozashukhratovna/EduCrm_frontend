@@ -1,5 +1,13 @@
 <template>
   <app-modal v-model="dialog">
+    <h1
+      class="text-center text-[30px] text-color1 font-[500] mb-[30px]"
+      v-if="!forms._id">
+      Create cource
+    </h1>
+    <h1 class="text-center text-[30px] text-color1 font-[500] mb-[30px]" v-else>
+      Edit cource
+    </h1>
     <vee-form
       :validation-schema="schema"
       @submit="send"
@@ -57,14 +65,10 @@ let forms = ref({
 });
 
 const btn_title = computed(() => {
-  if (loading.value) {
+  if (store.loading) {
     return "Loading";
   } else {
-    if (forms.value._id) {
-      return "Edit Course";
-    } else {
-      return "Add Course";
-    }
+    return "Save";
   }
 });
 

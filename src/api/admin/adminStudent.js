@@ -1,7 +1,7 @@
 import axiosClient from "../axios/apiClient";
 
 export const adminStudent = {
-  getStudents(params) {
+  getStudents(params={}) {
     const url = `admin/get-students/q?page=${params.page}&limit=${params.limit}`;
     return axiosClient.get(url);
   },

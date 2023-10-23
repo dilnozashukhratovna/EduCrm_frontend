@@ -1,5 +1,13 @@
 <template>
   <app-modal v-model="dialog">
+    <h1
+      class="text-center text-[30px] text-color1 font-[500] mb-[30px]"
+      v-if="!forms._id">
+      Create student
+    </h1>
+    <h1 class="text-center text-[30px] text-color1 font-[500] mb-[30px]" v-else>
+      Edit student
+    </h1>
     <vee-form
       :validation-schema="schema"
       @submit="send"
@@ -20,8 +28,10 @@
         label="Phone"
         placeholder="(+998)-90-123-45-67"
         :mask="'(+998)-##-###-##-##'"></VInput>
+      <input type="file" @change="handleChange($event)" class="mb-[30px]" />
+
       <VButton btn_type="primary" :isLoading="loading" type="submit">
-        {{ btn_title }}
+        save
       </VButton>
     </vee-form>
   </app-modal>
@@ -42,11 +52,13 @@ import { useStudentStore } from "../../../stores/admin/student";
 import Notification from "../../../plugins/Notification";
 import { ref, computed, reactive, watch } from "vue";
 import VDelete from "../../../components/form/VDelete.vue";
+import { useAuthStore } from "../../../stores/auth";
 const dialog = ref(false);
 const dialog2 = ref(false);
 const loading = ref(false);
 const studentId = ref(null);
 const store = useStudentStore();
+const store2 = useAuthStore();
 const student = ref(null);
 watch(dialog, (value) => {
   if (!value) {
@@ -58,25 +70,22 @@ let forms = ref({
   first_name: "",
   last_name: "",
   phone: "",
+  image: "",
 });
 
-const btn_title = computed(() => {
-  if (loading.value) {
-    return "Loading";
-  } else {
-    if (forms.value._id) {
-      return "Edit Student";
-    } else {
-      return "Add Student";
-    }
-  }
-});
+const handleChange = async (e) => {
+  const form = new FormData();
+  form.append("image", e.target.files[0]);
+  forms.image = form;
+  await store2.updateImage(form);
+};
 
 const schema = computed(() => {
   return {
     first_name: "required|min:3|max:30",
     last_name: "required|min:3|max:30",
     phone: "required|phone:19",
+    image: "required",
   };
 });
 
@@ -102,13 +111,15 @@ const send = async (values) => {
         .split("")
         .filter((char) => char === "+" || !isNaN(+char))
         .join(""),
+      image: store2?.image,
     };
     loading.value = true;
     await store.createStudent(payload);
+    console.log("Image:", image);
     Notification("Student created!", "success");
     loading.value = false;
     dialog.value = false;
-    // location.reload();
+    location.reload();
   } else {
     const payload = {
       first_name: values.first_name,
@@ -117,10 +128,12 @@ const send = async (values) => {
         .split("")
         .filter((char) => char === "+" || !isNaN(+char))
         .join(""),
+      image: store2?.image,
     };
     console.log("Payload from edit:", payload);
     loading.value = true;
     await store.updateStudent(payload, forms.value._id);
+    console.log("Image:", image);
     loading.value = false;
     dialog.value = false;
     location.reload();

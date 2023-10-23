@@ -1,5 +1,13 @@
 <template>
   <app-modal v-model="dialog">
+    <h1
+      class="text-center text-[30px] text-color1 font-[500] mb-[30px]"
+      v-if="!forms._id">
+      Create group
+    </h1>
+    <h1 class="text-center text-[30px] text-color1 font-[500] mb-[30px]" v-else>
+      Edit group
+    </h1>
     <div>
       <div v-if="store2.courses">
         <select class="m-3 border-2" v-model="groupPayload.course_id">
@@ -102,18 +110,6 @@ watch(dialog, (value) => {
 });
 
 let forms = ref({});
-
-const btn_title = computed(() => {
-  if (loading.value) {
-    return "Loading";
-  } else {
-    if (forms.value._id) {
-      return "Edit Group";
-    } else {
-      return "Add Group";
-    }
-  }
-});
 
 const handleChangeDays = (e) => {
   if (e.target.value == "odd") groupPayload.days = true;

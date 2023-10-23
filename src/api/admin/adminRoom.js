@@ -1,7 +1,7 @@
 import axiosClient from "../axios/apiClient";
 
 export const adminRoom = {
-  getRooms(params) {
+  getRooms(params={}) {
     const url = `rooms/all/q?page=${params.page}&limit=${params.limit}`;
     return axiosClient.get(url);
   },
