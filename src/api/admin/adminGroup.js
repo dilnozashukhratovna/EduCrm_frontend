@@ -1,7 +1,7 @@
 import axiosClient from "../axios/apiClient";
 
 export const adminGroup = {
-  getGroups(params={}) {
+  getGroups(params = {}) {
     const url = `groups/all/q?page=${params.page}&limit=${params.limit}`;
     return axiosClient.get(url);
   },
@@ -27,6 +27,15 @@ export const adminGroup = {
 
   availableAdminRooms(payload) {
     const url = `groups/available-rooms`;
+    return axiosClient.post(url, payload);
+  },
+
+  getGroupTeacher(id) {
+    const url = `courses/all-teachers/${id}`;
+    return axiosClient.get(url);
+  },
+  addGroupTeacher(payload) {
+    const url = `groups/add-teacher`;
     return axiosClient.post(url, payload);
   },
 };

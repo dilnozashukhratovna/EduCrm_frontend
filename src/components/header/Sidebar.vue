@@ -30,11 +30,13 @@ import { computed, ref } from "vue";
 import { UseSidebar } from "../../hooks/UseSidebar";
 import { AdminMenu } from "../menu/AdminMenu";
 import { DirectorMenu } from "../menu/DirectorMenu";
+import { TeacherMenu } from "../menu/TeacherMenu";
 const { isOpen } = UseSidebar();
 const role = localStorage.getItem("role");
 const menu = computed(() => {
   if (role == "admin") return AdminMenu;
   else if (role == "director") return DirectorMenu;
+  else if (role == "teacher") return TeacherMenu;
 });
 </script>
 

@@ -6,11 +6,11 @@
         role ({{ store?.roles?.length }})
         <!-- role -->
       </h1>
-      <button
+      <!-- <button
         @click="openModal"
         class="p-[10px] bg-color1 text-white w-[200px] rounded-full">
         create role
-      </button>
+      </button> -->
     </div>
     <!-- ===================== TABLE ============== -->
     <app-table :headers="headers" :body="store?.roles">
@@ -32,10 +32,13 @@
         <span v-else>{{ item.description }}</span>
       </template>
       <!-- =====================BUTTONS CONFIGURATION ============== -->
-      <template #body_action="{ item }">
+      <!-- <template #body_action="{ item }">
         <VActions :item="item" :modal_value="modal_value"></VActions>
-      </template>
+      </template> -->
     </app-table>
+  </div>
+  <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
+    Loading...
   </div>
 </template>
 
@@ -54,7 +57,7 @@ const headers = ref([
   { title: "ID", value: "_id" },
   { title: "NAME", value: "name" },
   { title: "DESCRIPTION", value: "description" },
-  { title: "Action", value: "action" },
+  // { title: "Action", value: "action" },
 ]);
 
 const formatData = (data) => {

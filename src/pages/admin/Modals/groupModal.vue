@@ -10,7 +10,10 @@
     </h1>
     <div>
       <div v-if="store2.courses">
-        <select class="m-3 border-2" v-model="groupPayload.course_id">
+        <select
+          class="m-3 border-2"
+          v-model="groupPayload.course"
+          @change="handleChangeCourse($event)">
           <option value="" selected hidden>Select course</option>
           <option
             :value="item._id"
@@ -49,14 +52,25 @@
           end-placeholder="End time"
           @change="handleChangeTime($event)" />
       </div>
-      <div v-if="store.availableRooms">
-        <select class="m-3 border-2" v-model="groupPayload.room_id">
+      <div v-if="store?.availableRooms">
+        <select class="m-3 border-2" v-model="groupPayload.room">
           <option value="" selected hidden>Select room</option>
           <option
             :value="item._id"
             v-for="(item, index) in store?.availableRooms"
             :key="index">
             {{ item.name }}
+          </option>
+        </select>
+      </div>
+      <div v-if="store?.teachers.length">
+        <select class="m-3 border-2" v-model="groupPayload.teacher">
+          <option value="" selected hidden>Select teacher</option>
+          <option
+            :value="item._id"
+            v-for="(item, index) in store?.teachers"
+            :key="index">
+            {{ item.first_name }} {{ item.last_name }}
           </option>
         </select>
       </div>
@@ -91,15 +105,17 @@ const groupId = ref(null);
 const store = useGroupStore();
 const store2 = useCourseStore();
 const group = ref(null);
+const teacher = ref(null);
 const groupPayload = reactive({
   name: "",
   start_date: "",
   days: true,
   start_time: null,
   end_time: null,
-  room_id: "",
-  course_id: "",
+  room: "",
+  course: "",
   status: true,
+  teacher: "",
 });
 const value1 = ref([new Date(), new Date()]);
 const value2 = ref("");
@@ -132,6 +148,11 @@ const handleChangeTime = async (e) => {
 };
 const handleChangeData = (e) => {
   groupPayload.start_date = moment(e).format("YYYY-MM-DD");
+};
+
+const handleChangeCourse = async (e) => {
+  console.log(e.target.value);
+  await store.getGroupTeacher(e.target.value);
 };
 
 // const schema = computed(() => {
@@ -171,11 +192,17 @@ const send = async (values) => {
   //   location.reload();
   // }
   loading.value = true;
+  console.log("Group payload:", groupPayload);
   await store.createGroup(groupPayload);
+  let result = {
+    group: store.group_id,
+    teacher: groupPayload.teacher,
+  };
+  await store.addGroupTeacher(result);
   Notification("Group created!", "success");
   loading.value = false;
   dialog.value = false;
-  location.reload();
+  // location.reload();
 };
 const deleteGroup = async () => {
   loading.value = true;

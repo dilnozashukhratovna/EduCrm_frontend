@@ -3,13 +3,14 @@
   <div v-if="store?.groups" class="p-[20px] pl-[30px]">
     <div class="mb-[20px] flex justify-between items-center">
       <h1 class="text-[#002842] font-Inter text-[22px] font-[600] uppercase">
-        groups ({{ store?.count }})
+        <!-- group ({{ store?.groups?.length }}) -->
+        groups
       </h1>
-      <button
+      <!-- <button
         @click="openModal"
         class="p-[10px] bg-color1 text-white w-[200px] rounded-full">
         create group
-      </button>
+      </button> -->
     </div>
     <!-- ===================== TABLE ============== -->
     <app-table :headers="headers" :body="store?.groups">
@@ -23,16 +24,6 @@
       <template #body_id="{ item }">
         <span>{{ item._id }}</span>
       </template>
-      <!-- ===================== ROOM  ====================== -->
-      <template #body_room="{ item }">
-        <span v-if="item?.room === null">Not choosen</span>
-        <span v-else>{{ item?.room?.name }}</span>
-      </template>
-      <!-- ===================== COURSE ID ====================== -->
-      <template #body_course="{ item }">
-        <span v-if="item?.course === null">Not choosen</span>
-        <span v-else>{{ item?.course?.name }}</span>
-      </template>
       <!-- ===================== DAYS ====================== -->
       <template #body_days="{ item }">
         <div v-if="item?.days" class="flex gap-2">
@@ -41,6 +32,10 @@
         <div v-else class="flex gap-2">
           <span>Tue/Thu/Sat</span>
         </div>
+      </template>
+      <!-- =====================BUTTONS CONFIGURATION ============== -->
+      <template #body_action="{ item }">
+        <VActions :item="item" :modal_value="modal_value"></VActions>
       </template>
       <!-- ===================== START DATE ====================== -->
       <template #body_start_date="{ item }">
@@ -58,75 +53,61 @@
       <template #body_end_time="{ item }">
         <span>{{ FormatTime(item?.end_time) }}</span>
       </template>
-      <!-- =====================BUTTONS CONFIGURATION ============== -->
-      <template #body_action="{ item }">
-        <VActions
-          :item="item"
-          :modal_value="modal_value"
-          path="/single_group"></VActions>
+      <!-- ===================== STUDENTS COUNT ====================== -->
+      <template #body_student_count="{ item }">
+        <span v-if="item.length">{{ item }}</span>
+        <span v-else>No students yet</span>
       </template>
     </app-table>
-    <div>
-      <v-pagination
-        v-model="params.page"
-        :pages="params.last_page"
-        :range-size="1"
-        active-color="#DCEDFF"
-        @update:modelValue="store.getGroups(params)" />
-    </div>
   </div>
   <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
     Loading...
   </div>
-  <!-- <loader v-if="store.loading"></loader> -->
 </template>
 
 <script setup>
-import { useGroupStore } from "../../stores/admin/group";
-import { useCourseStore } from "../../stores/admin/course";
+import { onMounted, ref } from "vue";
+import appTable from "../../components/ui/app-table.vue";
 import VActions from "../../components/form/VActions.vue";
-import { ref, onMounted } from "vue";
-import AppTable from "../../components/ui/app-table.vue";
-import GroupModal from "./Modals/groupModal.vue";
-import VPagination from "@hennge/vue3-pagination";
-import "@hennge/vue3-pagination/dist/vue3-pagination.css";
+// import GroupModal from "./Modals/groupModal.vue";
+import { useTeacherGroupStore } from "../../stores/teacher/group";
+import { useAuthStore } from "../../stores/auth";
 import { FormatDate } from "../../hooks/FormatDate";
 import { FormatTime } from "../../hooks/FormatTime";
-import Loader from "@/components/loader/Loader.vue";
-import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiPencil, mdiTrashCanOutline, mdiSquareEditOutline } from "@mdi/js";
-
-const store = useGroupStore();
-const store2 = useCourseStore();
-const groupModal = ref();
-const params = {
-  page: 1,
-  limit: 10,
-  last_page: null,
-};
-
+const store = useTeacherGroupStore();
+const auth_store = useAuthStore();
 const modal_value = ref("");
+
 const headers = ref([
   { title: "checkbox", value: "checkbox" },
-  // { title: "ID", value: "_id" },
   { title: "GROUP NAME", value: "name" },
-  { title: "START DATE", value: "start_date" },
-  { title: "END DATE", value: "end_date" },
-  { title: "DAYS", value: "days" },
+  { title: "STUDENTS", value: "student_count" },
   { title: "START TIME", value: "start_time" },
   { title: "END TIME", value: "end_time" },
-  { title: "ROOM NAME", value: "room" },
-  { title: "STATUS", value: "status" },
-  { title: "COURSE NAME", value: "course" },
+  { title: "DAYS", value: "days" },
+  { title: "START DATE", value: "start_date" },
+  { title: "END DATE", value: "start_date" },
   { title: "ACTION", value: "action" },
 ]);
+
+// const formatData = (data) => {
+//   return moment(data).format("YYYY-MM-DD");
+// };
+
+// const formatTime = (time) => {
+//   let hour = `${parseInt(time / 60)}`.padStart(2, 0);
+//   let minute = `${time % 60}`.padStart(2, 0);
+//   let result = `${hour}:${minute}`;
+//   return result;
+// };
+
 const openModal = () => {
   modal_value.value.openModal();
 };
 
-onMounted(() => {
-  store.getGroups(params);
-  store2.getCourses(params);
+onMounted(async () => {
+  await auth_store.getProfile();
+  store.getTeacherGroups(auth_store?.profile?._id);
 });
 </script>
 

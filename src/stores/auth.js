@@ -30,7 +30,7 @@ export const useAuthStore = defineStore("auth", {
         } else if (this.user?.user?.role === "director") {
           router.push({ name: "staffs" });
         } else if (this.user?.user?.role === "teacher") {
-          router.push({ name: "teacher" });
+          router.push({ name: "teacher-groups" });
         }
       } catch (error) {
         this.error = error?.response?.data?.message

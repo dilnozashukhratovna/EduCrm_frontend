@@ -28,15 +28,15 @@ export const AdminMenu = [
     icon: mdiDoorOpen,
   },
   {
-    path: "/profile",
-    name: "profile",
-    label: "Profile",
-    icon: mdiCog,
-  },
-  {
     path: "/courses",
     name: "courses",
     label: "Courses",
     icon: mdiGolf,
+  },
+  {
+    path: "/profile",
+    name: "profile",
+    label: "Profile",
+    icon: mdiCog,
   },
 ];

@@ -34,9 +34,9 @@
     </vee-form>
   </app-modal>
 
-  <app-modal v-model="dialog2">
+  <!-- <app-modal v-model="dialog2">
     <VDelete v-model="dialog2" :delete-function="deleteRole" name="role" />
-  </app-modal>
+  </app-modal> -->
 </template>
 
 <script setup>
@@ -97,33 +97,34 @@ const deleteRole = async () => {
   await store.deleteRole(roleId.value);
   loading.value = false;
   dialog2.value = false;
-  location.reload();
+  // location.reload();
   Notification("Role deleted!", "success");
 };
 
-const send = async (values) => {
-  console.log(values);
-  if (!values._id) {
-    try {
-      loading.value = true;
-      await store.createRole(values);
-      loading.value = false;
-      dialog.value = false;
-      location.reload();
-      Notification("Role created!", "success");
-    } catch (error) {
-      console.log("Error in creating role in roleModal:", error);
-      Notification("Error occured!", "danger");
-    }
-  } else {
-    console.log("Payload from edit:", values);
-    loading.value = true;
-    await store.updateRole(values, values._id);
-    loading.value = false;
-    dialog.value = false;
-    location.reload();
-  }
-};
+// const send = async (values) => {
+//   console.log(values);
+//   if (!values._id) {
+//     try {
+//       loading.value = true;
+//       await store.createRole(values);
+//       loading.value = false;
+//       dialog.value = false;
+//       location.reload();
+//       Notification("Role created!", "success");
+//     } catch (error) {
+//       console.log("Error in creating role in roleModal:", error);
+//       Notification("Error occured!", "danger");
+//     }
+//   } 
+//   else {
+//     console.log("Payload from edit:", values);
+//     loading.value = true;
+//     await store.updateRole(values, values._id);
+//     loading.value = false;
+//     dialog.value = false;
+//     location.reload();
+//   }
+// };
 
 defineExpose({ openModal, openDeleteModal });
 </script>

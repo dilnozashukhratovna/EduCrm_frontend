@@ -29,21 +29,21 @@ export const useStaffStore = defineStore("staff", {
         this.loading = false;
       }
     },
-    // async createStaff(payload) {
-    //   try {
-    //     this.loading = true;
-    //     const data = await adminStaff.createStaff(payload);
-    //     this.newStaff = JSON.parse(JSON.stringify(data));
-    //     console.log("NewStaff:", this.newStaff);
-    //   } catch (error) {
-    //     this.error = error?.response?.data?.message
-    //       ? error?.response?.data?.message
-    //       : error.message;
-    //     console.log(error);
-    //   } finally {
-    //     this.loading = false;
-    //   }
-    // },
+    async createStaff(payload) {
+      try {
+        this.loading = true;
+        const data = await directorStaffs.createStaff(payload);
+        this.newStaff = JSON.parse(JSON.stringify(data));
+        console.log("NewStaff:", this.newStaff);
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log(error);
+      } finally {
+        this.loading = false;
+      }
+    },
     // async updateStaff(payload, id) {
     //   try {
     //     this.loading = true;

@@ -16,7 +16,7 @@
         class="custom-select-option text-paragraph-default"
         v-for="(option, index) in options"
         :key="`${index}${option}`"
-        :value="option.name ? option.name : option">
+        :value="JSON.stringify(option)">
         {{ option.name ? option.name : option }}
       </option>
     </vee-field>

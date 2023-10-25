@@ -16,5 +16,10 @@ export default {
       name: "roles",
       component: import("@/pages/director/RolesPage.vue"),
     },
+    {
+      path: "/profile",
+      name: "profile",
+      component: () => import("../pages/global/ProfilePage.vue"),
+    },
   ],
 };

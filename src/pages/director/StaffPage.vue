@@ -49,6 +49,9 @@
       </template>
     </app-table>
   </div>
+  <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
+    Loading...
+  </div>
 </template>
 
 <script setup>

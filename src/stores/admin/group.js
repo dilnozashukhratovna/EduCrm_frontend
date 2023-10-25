@@ -10,6 +10,8 @@ export const useGroupStore = defineStore("group", {
     updatedGroup: null,
     group: null,
     availableRooms: null,
+    teachers: [],
+    group_id: "",
   }),
   getters: {},
   actions: {
@@ -35,7 +37,9 @@ export const useGroupStore = defineStore("group", {
         this.loading = true;
         const data = await adminGroup.createGroup(payload);
         this.newGroup = JSON.parse(JSON.stringify(data));
+        this.group_id = this.newGroup.group._id;
         console.log("NewGroup:", this.newGroup);
+        console.log("Group id:", this.group_id);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
@@ -98,6 +102,34 @@ export const useGroupStore = defineStore("group", {
           ? error?.response?.data?.message
           : error.message;
         console.log("Error in availableRooms func in store", error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async getGroupTeacher(id) {
+      try {
+        this.loading = true;
+        let res = await adminGroup.getGroupTeacher(id);
+        this.teachers = res.teachers;
+        console.log("Teachers:", this.teachers);
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+    async addGroupTeacher(payload) {
+      try {
+        this.loading = true;
+        await adminGroup.addGroupTeacher(payload);
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log(error);
       } finally {
         this.loading = false;
       }

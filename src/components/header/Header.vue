@@ -27,12 +27,25 @@
     <div class="flex justify-center items-center gap-[10px]">
       <span
         class="w-[40px] h-[40px] flex justify-center items-center bg-white rounded-full mr-[5px]">
-        <svg-icon
+        <!-- <svg-icon
           type="mdi"
           :path="mdiAccountOutline"
-          class="text-[#002842]"></svg-icon>
+          class="text-[#002842]"></svg-icon> -->
+        <img
+          :src="image"
+          alt=""
+          v-if="store?.profile?.image"
+          class="w-[40px] h-[40px] rounded-full" />
+        <img
+          src="../../assets/images/avatar.jpeg"
+          alt=""
+          v-else
+          class="w-[40px] h-[40px] rounded-full" />
       </span>
-      <span class="text-white text-[18px] font-thin">{{ name }}</span>
+      <span class="text-white text-[18px] font-thin" v-if="store?.profile">{{
+        full_name
+      }}</span>
+      <span class="text-white text-[18px] font-thin" v-else>{{ name }}</span>
       <svg-icon
         type="mdi"
         :path="mdiChevronDown"
@@ -51,14 +64,31 @@ import {
   mdiChevronLeft,
   mdiMenu,
 } from "@mdi/js";
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import { UseSidebar } from "../../hooks/UseSidebar";
+import { useAuthStore } from "../../stores/auth";
 const { isOpen } = UseSidebar();
+const store = useAuthStore();
 const role = localStorage.getItem("role");
 const name = computed(() => {
   if (role == "admin") return "Admin";
   else if (role == "director") return "Director";
+  else if (role == "teacher") return "Teacher";
 });
+// const full_name = computed(() => {
+//   if (store?.profile?.first_name) return "Admin";
+//   else if (role == "director") return "Director";
+//   else if (role == "teacher") return "Teacher";
+// });
+
+const image = ref("");
+const full_name = ref("");
+const updateData = () => {
+  image.value = store?.profile?.image;
+  full_name.value = `${store?.profile?.first_name} ${store?.profile?.last_name}`;
+};
+
+console.log("Full name:", full_name);
 
 const open = ref(false);
 const rotate = (e) => {
@@ -69,6 +99,11 @@ const rotate = (e) => {
     console.log((e.target.style.rotate = "0deg"));
   }
 };
+
+onMounted(async () => {
+  await store.getProfile();
+  updateData();
+});
 </script>
 
 <style lang="scss" scoped></style>

@@ -1,9 +1,13 @@
 <template>
   <div>
-    <h1>Teacher</h1>
+    <MainLayout>
+      <router-view></router-view>
+    </MainLayout>
   </div>
 </template>
 
-<script setup></script>
+<script setup>
+import MainLayout from "../../layouts/MainLayout.vue";
+</script>
 
 <style lang="scss" scoped></style>

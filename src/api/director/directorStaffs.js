@@ -1,7 +1,7 @@
 import axiosClient from "../axios/apiClient";
 
 export const directorStaffs = {
-  getStaffs(params={}) {
+  getStaffs(params = {}) {
     const url = `director/get-staffs/q?page=${params.page}&limit=${params.limit}`;
     return axiosClient.get(url);
   },
@@ -11,10 +11,10 @@ export const directorStaffs = {
   //     return axiosClient.get(url, params);
   //   },
 
-  //   createCourse(payload) {
-  //     const url = `courses/create-course`;
-  //     return axiosClient.post(url, payload);
-  //   },
+  createStaff(payload) {
+    const url = `director/add-staff`;
+    return axiosClient.post(url, payload);
+  },
 
   //   updateCourse(payload, id) {
   //     const url = `courses/update/${id}`;
