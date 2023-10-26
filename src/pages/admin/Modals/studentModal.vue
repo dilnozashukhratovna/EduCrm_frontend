@@ -136,7 +136,7 @@ const send = async (values) => {
     console.log("Image:", image);
     loading.value = false;
     dialog.value = false;
-    location.reload();
+    // location.reload();
   }
 };
 const deleteStudent = async () => {

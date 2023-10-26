@@ -19,8 +19,8 @@
           ><input type="checkbox" class="w-[18px] h-[18px]"
         /></span>
       </template>
-       <!-- ===================== IMAGE ============== -->
-       <template #body_image="{ item }">
+      <!-- ===================== IMAGE ============== -->
+      <template #body_image="{ item }">
         <span class="w-full flex items-center">
           <img
             v-if="item?.image == null"
@@ -45,37 +45,13 @@
       <!-- =====================BUTTONS CONFIGURATION ============== -->
       <template #body_action="{ item }">
         <VActions :item="item" :modal_value="modal_value"></VActions>
-        <!-- <button @click="openEditModal(item)" class="mr-[10px] ml-[10px]">
-          <span class="flex justify-center items-center gap-2 z-50">
-            <svg-icon
-              type="mdi"
-              :path="mdiSquareEditOutline"
-              class="hover:text-color1-600 z-50 text-[#fcba03]"></svg-icon>
-          </span>
-        </button>
-        <button @click="openDelete(item._id)">
-          <span class="flex justify-center items-center gap-2 z-50">
-            <svg-icon
-              type="mdi"
-              :path="mdiTrashCanOutline"
-              class="hover:text-color1-600 z-50 text-[crimson]"></svg-icon>
-          </span>
-        </button> -->
       </template>
     </app-table>
-    <div>
-      <v-pagination
-        v-model="params.page"
-        :pages="params.last_page"
-        :range-size="1"
-        active-color="#DCEDFF"
-        @update:modelValue="store.getStudents(params)" />
-    </div>
+    <app-pagination
+      :params="params"
+      :change-params="getStudents"></app-pagination>
   </div>
-  <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
-    Loading...
-  </div>
-  <!-- <loader v-if="store.loading"></loader> -->
+  <table-loader v-if="store.loading"></table-loader>
 </template>
 
 <script setup>
@@ -84,10 +60,10 @@ import VActions from "../../components/form/VActions.vue";
 import { ref, onMounted } from "vue";
 import AppTable from "../../components/ui/app-table.vue";
 import StudentModal from "./Modals/studentModal.vue";
-import VPagination from "@hennge/vue3-pagination";
-import "@hennge/vue3-pagination/dist/vue3-pagination.css";
 import Loader from "@/components/loader/Loader.vue";
+import TableLoader from "../../components/loader/TableLoader.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
+import appPagination from "../../components/ui/app-pagination.vue";
 import { mdiPencil, mdiTrashCanOutline, mdiSquareEditOutline } from "@mdi/js";
 
 const store = useStudentStore();
@@ -115,24 +91,13 @@ const openModal = () => {
   modal_value.value.openModal();
 };
 
-// const openModal = () => {
-//   studentModal.value.openModal();
-// };
-
-// const openEditModal = (item) => {
-//   studentModal.value.openModal(item);
-// };
-
-// const openDelete = (id) => {
-//   console.log(id);
-//   studentModal.value.openDeleteModal(id);
-// };
+const getStudents = () => {
+  store.getStudents(params);
+};
 
 onMounted(() => {
   store.getStudents(params);
 });
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

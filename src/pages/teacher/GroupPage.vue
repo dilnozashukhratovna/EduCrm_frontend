@@ -55,14 +55,16 @@
       </template>
       <!-- ===================== STUDENTS COUNT ====================== -->
       <template #body_student_count="{ item }">
-        <span v-if="item.length">{{ item }}</span>
+        <!-- <span>{{ item }}</span> -->
+        <span v-if="item.student_count > 0">{{ item.student_count }}</span>
         <span v-else>No students yet</span>
       </template>
     </app-table>
   </div>
-  <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
+  <!-- <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
     Loading...
-  </div>
+  </div> -->
+  <table-loader v-if="store.loading"></table-loader>
 </template>
 
 <script setup>
@@ -74,6 +76,7 @@ import { useTeacherGroupStore } from "../../stores/teacher/group";
 import { useAuthStore } from "../../stores/auth";
 import { FormatDate } from "../../hooks/FormatDate";
 import { FormatTime } from "../../hooks/FormatTime";
+import TableLoader from "../../components/loader/TableLoader.vue";
 const store = useTeacherGroupStore();
 const auth_store = useAuthStore();
 const modal_value = ref("");

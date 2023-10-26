@@ -66,19 +66,15 @@
           path="/single_group"></VActions>
       </template>
     </app-table>
-    <div>
-      <v-pagination
-        v-model="params.page"
-        :pages="params.last_page"
-        :range-size="1"
-        active-color="#DCEDFF"
-        @update:modelValue="store.getGroups(params)" />
-    </div>
+    <app-pagination
+      :params="params"
+      :change-params="getGroups"></app-pagination>
   </div>
-  <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
+  <!-- <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
     Loading...
-  </div>
-  <!-- <loader v-if="store.loading"></loader> -->
+  </div> -->
+  <table-loader v-if="store.loading"></table-loader>
+
 </template>
 
 <script setup>
@@ -88,13 +84,11 @@ import VActions from "../../components/form/VActions.vue";
 import { ref, onMounted } from "vue";
 import AppTable from "../../components/ui/app-table.vue";
 import GroupModal from "./Modals/groupModal.vue";
-import VPagination from "@hennge/vue3-pagination";
-import "@hennge/vue3-pagination/dist/vue3-pagination.css";
+import appPagination from "../../components/ui/app-pagination.vue";
 import { FormatDate } from "../../hooks/FormatDate";
 import { FormatTime } from "../../hooks/FormatTime";
 import Loader from "@/components/loader/Loader.vue";
-import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiPencil, mdiTrashCanOutline, mdiSquareEditOutline } from "@mdi/js";
+import TableLoader from "../../components/loader/TableLoader.vue";
 
 const store = useGroupStore();
 const store2 = useCourseStore();
@@ -122,6 +116,10 @@ const headers = ref([
 ]);
 const openModal = () => {
   modal_value.value.openModal();
+};
+
+const getGroups = () => {
+  store.getGroups(params);
 };
 
 onMounted(() => {

@@ -3,7 +3,7 @@
   <div v-if="store?.staffs" class="p-[20px] pl-[30px]">
     <div class="mb-[20px] flex justify-between items-center">
       <h1 class="text-[#002842] font-Inter text-[22px] font-[600] uppercase">
-        staff ({{ store?.staffs?.length }})
+        staff ({{ store?.count }})
         <!-- staff -->
       </h1>
       <button
@@ -48,10 +48,14 @@
         <span>{{ formatData(item?.start_date) }}</span>
       </template>
     </app-table>
+    <app-pagination
+      :params="params"
+      :change-params="getStaffs"></app-pagination>
   </div>
-  <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
+  <!-- <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
     Loading...
-  </div>
+  </div> -->
+  <table-loader v-if="store.loading"></table-loader>
 </template>
 
 <script setup>
@@ -60,6 +64,8 @@ import appTable from "../../components/ui/app-table.vue";
 import { useStaffStore } from "../../stores/director/staffs";
 import VActions from "../../components/form/VActions.vue";
 import StaffModal from "./Modals/staffModal.vue";
+import appPagination from "../../components/ui/app-pagination.vue";
+import TableLoader from "../../components/loader/TableLoader.vue";
 import moment from "moment";
 const store = useStaffStore();
 const modal_value = ref("");
@@ -74,6 +80,7 @@ const headers = ref([
   { title: "START DATA", value: "start_date" },
   { title: "Action", value: "action" },
 ]);
+
 const params = {
   page: 1,
   limit: 10,
@@ -86,6 +93,10 @@ const formatData = (data) => {
 
 const openModal = () => {
   modal_value.value.openModal();
+};
+
+const getStaffs = () => {
+  store.getStaffs(params);
 };
 onMounted(() => {
   store.getStaffs(params);

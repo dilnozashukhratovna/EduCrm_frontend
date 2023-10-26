@@ -10,6 +10,7 @@ import Vue3Toasity, { toast } from "vue3-toastify";
 import "vue3-toastify/dist/index.css";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
+import "../node_modules/nprogress/nprogress.css";
 
 const app = createApp(App);
 
