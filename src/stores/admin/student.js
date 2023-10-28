@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { adminStudent } from "../../api/admin/adminStudent";
+import Notification from "../../plugins/Notification";
 export const useStudentStore = defineStore("student", {
   state: () => ({
     students: null,
@@ -35,11 +36,14 @@ export const useStudentStore = defineStore("student", {
         const data = await adminStudent.createStudent(payload);
         this.newStudent = JSON.parse(JSON.stringify(data));
         console.log("NewStudent:", this.newStudent);
+        Notification("Success", "success");
+        location.reload();
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
+        Notification("Unproper data submitted", "danger");
       } finally {
         this.loading = false;
       }
@@ -50,6 +54,7 @@ export const useStudentStore = defineStore("student", {
         const data = await adminStudent.updateStudent(payload, id);
         this.updatedStudent = JSON.parse(JSON.stringify(data));
         console.log("updatedStudent:", this.updatedStudent);
+        location.reload();
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
@@ -64,11 +69,14 @@ export const useStudentStore = defineStore("student", {
       try {
         this.loading = true;
         await adminStudent.deleteStudent(id);
+        Notification("Success", "success");
+        location.reload();
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
+        Notification("Error occured", "danger");
       } finally {
         this.loading = false;
       }

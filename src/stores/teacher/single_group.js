@@ -1,23 +1,20 @@
 import { defineStore } from "pinia";
-import { teacherGroups } from "../../api/teacher/teacherGroup";
-export const useTeacherGroupStore = defineStore("teacher_group", {
+import { teacherSingleGroup } from "../../api/teacher/teacherSingleGroup";
+export const useTeacherSingleGroupStore = defineStore("teacher_single_group", {
   state: () => ({
-    groups: null,
-    count: null,
+    single_group: null,
     loading: false,
     error: null,
-    newGroup: null,
     updatedGroup: null,
-    group: null,
   }),
   getters: {},
   actions: {
-    async getTeacherGroups(id) {
+    async getTeacherSingleGroup(id) {
       try {
         this.loading = true;
-        const res = await teacherGroups.getGroups(id);
-        this.groups = res.groups;
-        console.log("TeacherGroups", this.groups);
+        const res = await teacherSingleGroup.getSingleGroup(id);
+        this.single_group = res.groups;
+        console.log("TeacherGroups", this.single_group);
         this.loading = false;
       } catch (error) {
         this.error = error?.response?.data?.message

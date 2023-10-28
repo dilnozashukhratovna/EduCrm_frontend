@@ -3,12 +3,12 @@
   <div v-if="store?.roles" class="p-[20px] pl-[30px]">
     <div class="mb-[20px] flex justify-between items-center">
       <h1 class="text-[#002842] font-Inter text-[22px] font-[600] uppercase">
-        role ({{ store?.roles?.length }})
+        roles ({{ store?.roles?.length }})
         <!-- role -->
       </h1>
       <!-- <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full">
+        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create role
       </button> -->
     </div>

@@ -22,7 +22,7 @@
             alt="" />
           <div class="p-[15px] h-[80px] mt-[30px]">
             <p>Personal ID:</p>
-            <h1 class="text-[20px] font-[500]">
+            <h1 class="text-[20px] font-[500] text-color1">
               {{ store?.profile?._id }}
             </h1>
           </div>

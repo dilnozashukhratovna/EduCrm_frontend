@@ -11,6 +11,8 @@ import "vue3-toastify/dist/index.css";
 import ElementPlus from "element-plus";
 import "element-plus/dist/index.css";
 import "../node_modules/nprogress/nprogress.css";
+import VueAwesomePaginate from "vue-awesome-paginate";
+import "vue-awesome-paginate/dist/style.css";
 
 const app = createApp(App);
 
@@ -24,5 +26,6 @@ app.use(Vue3Toasity, {
   theme: "colored",
 });
 app.use(ElementPlus);
+app.use(VueAwesomePaginate);
 
 app.mount("#app");

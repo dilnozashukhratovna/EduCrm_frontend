@@ -97,10 +97,8 @@ const send = async (values) => {
   if (!values._id) {
     loading.value = true;
     await store.createCourse(values);
-    Notification("Course created!", "success");
     loading.value = false;
     dialog.value = false;
-    location.reload();
   } else {
     console.log("Payload from edit:", values);
     loading.value = true;
@@ -117,7 +115,7 @@ const deleteCourse = async () => {
   await store.deleteCourse(courseId.value);
   loading.value = false;
   dialog2.value = false;
-  location.reload();
+  // location.reload();
   Notification("Course deleted!", "success");
 };
 

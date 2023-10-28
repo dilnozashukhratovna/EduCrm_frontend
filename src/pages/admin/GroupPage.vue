@@ -7,12 +7,14 @@
       </h1>
       <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full">
+        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create group
       </button>
     </div>
+    <table-loader v-if="store.loading"></table-loader>
+
     <!-- ===================== TABLE ============== -->
-    <app-table :headers="headers" :body="store?.groups">
+    <app-table :headers="headers" :body="store?.groups" v-else>
       <!-- ===================== CHECKBOX CONFIGURATION ============== -->
       <template #body_checkbox>
         <span class="w-full flex justify-center items-center"
@@ -22,6 +24,14 @@
       <!-- ===================== ID ====================== -->
       <template #body_id="{ item }">
         <span>{{ item._id }}</span>
+      </template>
+      <!-- ===================== NAME LINK ====================== -->
+      <template #body_name="{ item }">
+        <router-link
+          :to="`/single_group/${item._id}`"
+          class="hover:text-[crimson]"
+          >{{ item.name }}</router-link
+        >
       </template>
       <!-- ===================== ROOM  ====================== -->
       <template #body_room="{ item }">
@@ -60,10 +70,7 @@
       </template>
       <!-- =====================BUTTONS CONFIGURATION ============== -->
       <template #body_action="{ item }">
-        <VActions
-          :item="item"
-          :modal_value="modal_value"
-          path="/single_group"></VActions>
+        <VActions :item="item" :modal_value="modal_value"></VActions>
       </template>
     </app-table>
     <app-pagination
@@ -73,8 +80,6 @@
   <!-- <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
     Loading...
   </div> -->
-  <table-loader v-if="store.loading"></table-loader>
-
 </template>
 
 <script setup>
@@ -87,12 +92,10 @@ import GroupModal from "./Modals/groupModal.vue";
 import appPagination from "../../components/ui/app-pagination.vue";
 import { FormatDate } from "../../hooks/FormatDate";
 import { FormatTime } from "../../hooks/FormatTime";
-import Loader from "@/components/loader/Loader.vue";
 import TableLoader from "../../components/loader/TableLoader.vue";
 
 const store = useGroupStore();
-const store2 = useCourseStore();
-const groupModal = ref();
+const course_store = useCourseStore();
 const params = {
   page: 1,
   limit: 10,
@@ -122,9 +125,9 @@ const getGroups = () => {
   store.getGroups(params);
 };
 
-onMounted(() => {
-  store.getGroups(params);
-  store2.getCourses(params);
+onMounted(async () => {
+  await store.getGroups(params);
+  await course_store.getCourses(params);
 });
 </script>
 

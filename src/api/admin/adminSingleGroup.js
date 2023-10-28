@@ -1,13 +1,13 @@
 import axiosClient from "../axios/apiClient";
 
 export const adminGroupStudent = {
-  getGroupStudents(params={}) {
+  getGroupStudents(params = {}) {
     const url = `group-students/all/q?page=${params.page}&limit=${params.limit}`;
     return axiosClient.get(url);
   },
 
   createGroupStudent(payload) {
-    const url = `group-students/add-student`;
+    const url = `groups/add-student`;
     return axiosClient.post(url, payload);
   },
 

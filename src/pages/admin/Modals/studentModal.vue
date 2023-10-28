@@ -8,10 +8,7 @@
     <h1 class="text-center text-[30px] text-color1 font-[500] mb-[30px]" v-else>
       Edit student
     </h1>
-    <vee-form
-      :validation-schema="schema"
-      @submit="send"
-      :initial-values="forms">
+    <vee-form @submit="send" :initial-values="forms">
       <VInput
         type="text"
         name="first_name"
@@ -47,7 +44,6 @@
 import AppModal from "../../../components/ui/app-modal.vue";
 import VInput from "../../../components/form/VInput.vue";
 import VButton from "../../../components/form/VButton.vue";
-import Loader from "../../../components/loader/Loader.vue";
 import { useStudentStore } from "../../../stores/admin/student";
 import Notification from "../../../plugins/Notification";
 import { ref, computed, reactive, watch } from "vue";
@@ -115,11 +111,9 @@ const send = async (values) => {
     };
     loading.value = true;
     await store.createStudent(payload);
-    console.log("Image:", image);
-    Notification("Student created!", "success");
+    // console.log("Image:", image);
     loading.value = false;
     dialog.value = false;
-    location.reload();
   } else {
     const payload = {
       first_name: values.first_name,
@@ -141,13 +135,9 @@ const send = async (values) => {
 };
 const deleteStudent = async () => {
   loading.value = true;
-  // student.value = await getOneStudent();
-  // console.log("One student in delete func:", student.value);
   await store.deleteStudent(studentId.value);
   loading.value = false;
   dialog2.value = false;
-  location.reload();
-  Notification("Student deleted!", "success");
 };
 
 const getOneStudent = async () => {

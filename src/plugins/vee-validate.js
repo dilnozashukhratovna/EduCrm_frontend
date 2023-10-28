@@ -12,6 +12,13 @@ export default {
     defineRule("max", max);
     defineRule("email", email);
     defineRule("phone", min);
+    defineRule("boolean", (value) => {
+      if (value === false || value === true) {
+        return "";
+      } else {
+        return "The field days is required";
+      }
+    });
 
     configure({
       generateMessage(ctx) {

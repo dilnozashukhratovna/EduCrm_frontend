@@ -29,7 +29,7 @@ console.log(phone);
 
 const send = async () => {
   let payload = {
-    group_id: id,
+    group: id,
     student_phone: phone.value,
   };
   console.log("Hello");

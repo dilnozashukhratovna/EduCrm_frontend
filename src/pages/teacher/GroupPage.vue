@@ -4,11 +4,11 @@
     <div class="mb-[20px] flex justify-between items-center">
       <h1 class="text-[#002842] font-Inter text-[22px] font-[600] uppercase">
         <!-- group ({{ store?.groups?.length }}) -->
-        groups
+        teacher groups
       </h1>
       <!-- <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full">
+        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create group
       </button> -->
     </div>
@@ -55,9 +55,16 @@
       </template>
       <!-- ===================== STUDENTS COUNT ====================== -->
       <template #body_student_count="{ item }">
-        <!-- <span>{{ item }}</span> -->
         <span v-if="item.student_count > 0">{{ item.student_count }}</span>
         <span v-else>No students yet</span>
+      </template>
+      <!-- ===================== NAME LINK ====================== -->
+      <template #body_name="{ item }">
+        <router-link
+          :to="`/teacher_single_group/${item._id}`"
+          class="hover:text-[crimson]"
+          >{{ item.name }}</router-link
+        >
       </template>
     </app-table>
   </div>
@@ -92,17 +99,6 @@ const headers = ref([
   { title: "END DATE", value: "start_date" },
   { title: "ACTION", value: "action" },
 ]);
-
-// const formatData = (data) => {
-//   return moment(data).format("YYYY-MM-DD");
-// };
-
-// const formatTime = (time) => {
-//   let hour = `${parseInt(time / 60)}`.padStart(2, 0);
-//   let minute = `${time % 60}`.padStart(2, 0);
-//   let result = `${hour}:${minute}`;
-//   return result;
-// };
 
 const openModal = () => {
   modal_value.value.openModal();

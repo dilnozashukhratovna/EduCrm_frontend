@@ -7,7 +7,7 @@
       </h1>
       <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full">
+        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create student
       </button>
     </div>
@@ -70,7 +70,7 @@ const store = useStudentStore();
 const studentModal = ref();
 const params = {
   page: 1,
-  limit: 10,
+  limit: 7,
   last_page: null,
 };
 
@@ -91,8 +91,8 @@ const openModal = () => {
   modal_value.value.openModal();
 };
 
-const getStudents = () => {
-  store.getStudents(params);
+const getStudents = async() => {
+  await store.getStudents(params);
 };
 
 onMounted(() => {

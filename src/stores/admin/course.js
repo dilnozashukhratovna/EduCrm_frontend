@@ -1,5 +1,6 @@
 import { defineStore } from "pinia";
 import { adminCourse } from "../../api/admin/adminCourse";
+import Notification from "../../plugins/Notification";
 export const useCourseStore = defineStore("course", {
   state: () => ({
     courses: null,
@@ -35,11 +36,14 @@ export const useCourseStore = defineStore("course", {
         const data = await adminCourse.createCourse(payload);
         this.newCourse = JSON.parse(JSON.stringify(data));
         console.log("NewCourse:", this.newCourse);
+        Notification("Success", "success");
+        location.reload();
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
+        Notification("Unproper data submitted", "danger");
       } finally {
         this.loading = false;
       }

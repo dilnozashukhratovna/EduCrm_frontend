@@ -13,7 +13,7 @@
       :placeholder="placeholder"
       v-mask="mask"
       masked="true"
-      class="border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-color1/50 focus:border-color1 mb-[5px]" />
+      class="border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-color1/50 focus:border-color1 mb-[10px]" />
     <vee-field
       v-else
       :id="name"

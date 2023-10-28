@@ -7,7 +7,7 @@
       </h1>
       <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full">
+        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create room
       </button>
     </div>
