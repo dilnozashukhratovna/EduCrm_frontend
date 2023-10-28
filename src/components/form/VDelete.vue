@@ -1,11 +1,11 @@
 <template>
   <div class="flex justify-center items-center flex-col font-[500]">
-    <h1 class="text-[20px] text-color1">
+    <h1 class="text-[22px] font-bold w-full text-center text-global1">
       Are you sure you want to delete this {{ name }}?
     </h1>
     <div class="mt-[30px]">
       <button
-        class="p-[10px] w-[130px] bg-color1 hover:bg-[#073452] text-white rounded-full"
+        class="p-[10px] w-[130px] bg-global1 hover:bg-[#073452] text-white rounded-full"
         @click="$emit('update:modelValue', false)">
         CANCEL
       </button>

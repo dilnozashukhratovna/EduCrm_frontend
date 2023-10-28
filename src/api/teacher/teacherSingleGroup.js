@@ -6,6 +6,11 @@ export const teacherSingleGroup = {
     return axiosClient.get(url);
   },
 
+  getStudentsAttendance(id, params) {
+    const url = `groups/attendance/${id}/all/q?page=${params.page}&limit=${params.limit}`;
+    return axiosClient.get(url);
+  },
+
   //   createGroup(payload) {
   //     const url = `groups/create-group`;
   //     return axiosClient.post(url, payload);

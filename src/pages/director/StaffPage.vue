@@ -8,7 +8,7 @@
       </h1>
       <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
+        class="p-[10px] bg-global1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create staff
       </button>
     </div>
@@ -52,7 +52,7 @@
       :params="params"
       :change-params="getStaffs"></app-pagination>
   </div>
-  <!-- <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
+  <!-- <div v-else class="mt-[250px] text-center text-global1 text-[30px]">
     Loading...
   </div> -->
   <table-loader v-if="store.loading"></table-loader>
@@ -81,11 +81,11 @@ const headers = ref([
   { title: "Action", value: "action" },
 ]);
 
-const params = {
+const params = ref({
   page: 1,
-  limit: 10,
+  limit: 9,
   last_page: null,
-};
+});
 
 const formatData = (data) => {
   return moment(data).format("YYYY-MM-DD");
@@ -96,10 +96,10 @@ const openModal = () => {
 };
 
 const getStaffs = () => {
-  store.getStaffs(params);
+  store.getStaffs(params.value);
 };
 onMounted(() => {
-  store.getStaffs(params);
+  store.getStaffs(params.value);
 });
 </script>
 

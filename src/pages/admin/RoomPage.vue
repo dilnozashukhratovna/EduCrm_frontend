@@ -7,7 +7,7 @@
       </h1>
       <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
+        class="p-[10px] bg-global1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create room
       </button>
     </div>
@@ -30,9 +30,6 @@
     </app-table>
     <app-pagination :params="params" :change-params="getRooms"></app-pagination>
   </div>
-  <!-- <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
-    Loading...
-  </div> -->
   <table-loader v-if="store.loading"></table-loader>
 </template>
 
@@ -47,11 +44,11 @@ import Loader from "@/components/loader/Loader.vue";
 import TableLoader from "../../components/loader/TableLoader.vue";
 
 const store = useRoomStore();
-const params = {
+const params = ref({
   page: 1,
   limit: 10,
   last_page: null,
-};
+});
 
 const modal_value = ref("");
 const headers = ref([
@@ -67,11 +64,11 @@ const openModal = () => {
 };
 
 const getRooms = () => {
-  store.getRooms(params);
+  store.getRooms(params.value);
 };
 
 onMounted(() => {
-  store.getRooms(params);
+  store.getRooms(params.value);
 });
 </script>
 

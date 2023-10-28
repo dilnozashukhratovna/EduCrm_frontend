@@ -7,7 +7,7 @@
       </h1>
       <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
+        class="p-[10px] bg-global1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create group
       </button>
     </div>
@@ -77,9 +77,7 @@
       :params="params"
       :change-params="getGroups"></app-pagination>
   </div>
-  <!-- <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
-    Loading...
-  </div> -->
+  <table-loader v-if="store.loading"></table-loader>
 </template>
 
 <script setup>
@@ -90,17 +88,16 @@ import { ref, onMounted } from "vue";
 import AppTable from "../../components/ui/app-table.vue";
 import GroupModal from "./Modals/groupModal.vue";
 import appPagination from "../../components/ui/app-pagination.vue";
-import { FormatDate } from "../../hooks/FormatDate";
-import { FormatTime } from "../../hooks/FormatTime";
+import { FormatDate, FormatTime } from "../../hooks/FormatDate";
 import TableLoader from "../../components/loader/TableLoader.vue";
 
 const store = useGroupStore();
 const course_store = useCourseStore();
-const params = {
+const params = ref({
   page: 1,
   limit: 10,
   last_page: null,
-};
+});
 
 const modal_value = ref("");
 const headers = ref([
@@ -117,17 +114,18 @@ const headers = ref([
   { title: "COURSE NAME", value: "course" },
   { title: "ACTION", value: "action" },
 ]);
+
 const openModal = () => {
   modal_value.value.openModal();
 };
 
 const getGroups = () => {
-  store.getGroups(params);
+  store.getGroups(params.value);
 };
 
 onMounted(async () => {
-  await store.getGroups(params);
-  await course_store.getCourses(params);
+  await store.getGroups(params.value);
+  await course_store.getCourses(params.value);
 });
 </script>
 

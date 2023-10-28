@@ -1,5 +1,5 @@
 <template>
-  <div class="w-full h-screen flex justify-center items-center bg-color_bg">
+  <div class="w-full h-screen flex justify-center items-center bg-[#E7EDF0]">
     <!-- <div class="w-1/2 flex justify-center items-center h-full">
       <img
         src="@/assets/images/login_image.jpg"
@@ -7,13 +7,13 @@
         class="w-full scale-90 h-full object-cover" />
     </div> -->
     <div
-      class="w-[65%] flex flex-col justify-center items-center gap-8 bg-color_bg h-full">
+      class="w-[65%] flex flex-col justify-center items-center gap-8 bg-[#E7EDF0] h-full">
       <div class="w-full text-center">
         <h1
-          class="text-[36px] text-color1 font-medium font-mono tracking-wider select-none">
+          class="text-[36px] text-global1 font-medium font-mono tracking-wider select-none">
           LOGIN
         </h1>
-        <p class="text-[20px] text-color1"></p>
+        <p class="text-[20px] text-global1"></p>
       </div>
       <vee-form
         :validation-schema="schema"

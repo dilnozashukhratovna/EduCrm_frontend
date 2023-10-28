@@ -1,11 +1,13 @@
 <template>
   <app-modal v-model="dialog">
     <h1
-      class="text-center text-[30px] text-color1 font-[500] mb-[30px]"
+      class="text-center text-[30px] text-global1 font-[500] mb-[30px]"
       v-if="!forms._id">
       Create room
     </h1>
-    <h1 class="text-center text-[30px] text-color1 font-[500] mb-[30px]" v-else>
+    <h1
+      class="text-center text-[30px] text-global1 font-[500] mb-[30px]"
+      v-else>
       Edit room
     </h1>
     <vee-form

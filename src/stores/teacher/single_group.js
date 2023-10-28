@@ -2,10 +2,11 @@ import { defineStore } from "pinia";
 import { teacherSingleGroup } from "../../api/teacher/teacherSingleGroup";
 export const useTeacherSingleGroupStore = defineStore("teacher_single_group", {
   state: () => ({
-    single_group: null,
+    group_students: [],
     loading: false,
     error: null,
     updatedGroup: null,
+    attendance: null,
   }),
   getters: {},
   actions: {
@@ -13,8 +14,30 @@ export const useTeacherSingleGroupStore = defineStore("teacher_single_group", {
       try {
         this.loading = true;
         const res = await teacherSingleGroup.getSingleGroup(id);
-        this.single_group = res.groups;
-        console.log("TeacherGroups", this.single_group);
+        // for (let index = 0; index < res.students.length; index++) {
+        //   const element = res.students[index];
+        //   if (element !== null) {
+        //     this.group_students.push(element);
+        //   }
+        // }
+        this.group_students = res.students.filter(
+          (item) => item && item.first_name
+        );
+        console.log("TeacherGroups", this.group_students);
+        this.loading = false;
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log(error);
+      }
+    },
+    async getStudentsAttendance(id, params) {
+      try {
+        this.loading = true;
+        const res = await teacherSingleGroup.getStudentsAttendance(id, params);
+        this.attendance = res
+        console.log("Students attendance:", res);
         this.loading = false;
       } catch (error) {
         this.error = error?.response?.data?.message

@@ -2,7 +2,7 @@
   <div class="w-full flex flex-col">
     <label
       :for="name"
-      class="text-[18px] text-color1 font-medium mb-1 select-none"
+      class="text-[18px] text-global1 font-medium mb-1 select-none"
       >{{ label }}</label
     >
     <vee-field
@@ -10,7 +10,7 @@
       :type="type"
       :name="name"
       :placeholder="placeholder"
-      class="border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-color1/50 focus:border-color1 mb-[10px] h-[110px] resize-none rounded-md" />
+      class="border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-global1/50 focus:border-global1 mb-[10px] h-[110px] resize-none rounded-md" />
     <ErrorMessage
       :name="name"
       class="text-[16px] text-error_color select-none mb-[20px]" />

@@ -2,7 +2,7 @@
   <div class="w-full flex flex-col">
     <label
       for="password"
-      class="text-[18px] text-color1 font-medium mb-1 select-none"
+      class="text-[18px] text-global1 font-medium mb-1 select-none"
       >Password</label
     >
     <div class="flex justify-between items-center">
@@ -11,24 +11,20 @@
         :type="hidden ? 'password' : 'text'"
         :name="name"
         :placeholder="placeholder"
-        class="custom_style border outline-none rounded-s-lg px-3 py-2 text-[18px] placeholder:text-color1/50 w-[89%] focus:border-color1 select-none"
-      />
+        class="custom_style border outline-none rounded-s-lg px-3 py-2 text-[18px] placeholder:text-global1/50 w-[89%] focus:border-global1 select-none" />
       <span
         @click="hide"
-        class="w-[10%] border-none outline-none rounded-e-lg p-2 text-[18px] placeholder:text-color1 bg-white cursor-pointer flex justify-center items-center py-[9px]"
-      >
+        class="w-[10%] border-none outline-none rounded-e-lg p-2 text-[18px] placeholder:text-global1 bg-white cursor-pointer flex justify-center items-center py-[9px]">
         <svg-icon
           v-if="hidden"
           type="mdi"
           :path="mdiEye"
-          class="text-color1"
-        ></svg-icon>
+          class="text-global1"></svg-icon>
         <svg-icon
           v-else
           type="mdi"
           :path="mdiEyeOff"
-          class="text-color1"
-        ></svg-icon>
+          class="text-global1"></svg-icon>
       </span>
     </div>
     <ErrorMessage :name="name" class="text-[16px] text-red-700 select-none" />

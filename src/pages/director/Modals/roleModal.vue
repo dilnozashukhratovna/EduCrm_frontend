@@ -1,11 +1,13 @@
 <template>
   <app-modal v-model="dialog">
     <h1
-      class="text-center text-[30px] text-color1 font-[500] mb-[30px]"
+      class="text-center text-[30px] text-global1 font-[500] mb-[30px]"
       v-if="!forms._id">
       Create role
     </h1>
-    <h1 class="text-center text-[30px] text-color1 font-[500] mb-[30px]" v-else>
+    <h1
+      class="text-center text-[30px] text-global1 font-[500] mb-[30px]"
+      v-else>
       Edit role
     </h1>
     <vee-form
@@ -115,7 +117,7 @@ const deleteRole = async () => {
 //       console.log("Error in creating role in roleModal:", error);
 //       Notification("Error occured!", "danger");
 //     }
-//   } 
+//   }
 //   else {
 //     console.log("Payload from edit:", values);
 //     loading.value = true;

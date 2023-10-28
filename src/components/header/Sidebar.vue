@@ -6,7 +6,7 @@
       @click="isOpen = false"></div>
     <div
       :class="isOpen ? 'translate-x-0' : '-translate-x-full'"
-      class="w-[223px] bg-color1 pt-[70px] inset-y-0 fixed left-0 z-10 overflow-y-auto duration-300 lg:translate-x-0 lg:static">
+      class="w-[223px] bg-global1 pt-[70px] inset-y-0 fixed left-0 z-10 overflow-y-auto duration-300 lg:translate-x-0 lg:static">
       <span v-for="(item, index) in menu" :key="index">
         <router-link
           class="flex justify-start gap-4 items-center font-normal text-white text-[20px] pl-[30px] py-[15px] select-none transition-all duration-200"

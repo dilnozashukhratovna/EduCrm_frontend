@@ -55,7 +55,7 @@ const props = defineProps({
 .custom-table {
   font-family: "Inter", sans-serif;
   width: 100%;
-  margin-bottom: 50px;
+  margin-bottom: 30px;
 }
 
 .custom-table .th {

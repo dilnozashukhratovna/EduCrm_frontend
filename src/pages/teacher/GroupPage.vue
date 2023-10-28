@@ -8,7 +8,7 @@
       </h1>
       <!-- <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
+        class="p-[10px] bg-global1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create group
       </button> -->
     </div>
@@ -68,7 +68,7 @@
       </template>
     </app-table>
   </div>
-  <!-- <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
+  <!-- <div v-else class="mt-[250px] text-center text-global1 text-[30px]">
     Loading...
   </div> -->
   <table-loader v-if="store.loading"></table-loader>
@@ -81,8 +81,7 @@ import VActions from "../../components/form/VActions.vue";
 // import GroupModal from "./Modals/groupModal.vue";
 import { useTeacherGroupStore } from "../../stores/teacher/group";
 import { useAuthStore } from "../../stores/auth";
-import { FormatDate } from "../../hooks/FormatDate";
-import { FormatTime } from "../../hooks/FormatTime";
+import { FormatDate, FormatTime } from "../../hooks/FormatDate";
 import TableLoader from "../../components/loader/TableLoader.vue";
 const store = useTeacherGroupStore();
 const auth_store = useAuthStore();

@@ -2,17 +2,19 @@
   <app-modal v-model="dialog">
     <!-- MODAL TITLE -->
     <h1
-      class="text-center text-[30px] text-color1 font-[500] mb-[30px]"
+      class="text-center text-[30px] text-global1 font-[500] mb-[30px]"
       v-if="!forms._id">
       Create group
     </h1>
-    <h1 class="text-center text-[30px] text-color1 font-[500] mb-[30px]" v-else>
+    <h1
+      class="text-center text-[30px] text-global1 font-[500] mb-[30px]"
+      v-else>
       Edit group
     </h1>
     <!-- FORM -->
     <Form @submit="send" class="w-full">
       <!-- get group name -->
-      <label for="name" class="text-[18px] text-color1 font-medium select-none"
+      <label for="name" class="text-[18px] text-global1 font-medium select-none"
         >GroupName</label
       >
       <Field
@@ -25,7 +27,7 @@
           v-model="forms.name"
           placeholder="Group name..."
           id="name"
-          class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-color1/50 focus:border-color1 mb-[10px]" />
+          class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-global1/50 focus:border-global1 mb-[10px]" />
         <p
           class="text-[16px] text-error_color select-none mb-[20px]"
           v-if="errors && errors.length">
@@ -35,7 +37,7 @@
       <!-- get start date -->
       <label
         for="start_date"
-        class="text-[18px] text-color1 font-medium mb-1 select-none"
+        class="text-[18px] text-global1 font-medium mb-1 select-none"
         >SelectDate</label
       >
       <Field
@@ -65,7 +67,7 @@
       <!-- get odd or even day -->
       <label
         for="start_date"
-        class="text-[18px] text-color1 font-medium mb-1 select-none"
+        class="text-[18px] text-global1 font-medium mb-1 select-none"
         >SelectDays</label
       >
       <Field
@@ -75,7 +77,7 @@
         name="days">
         <select
           @change="handleChangeDays($event)"
-          class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-color1/50 focus:border-color1 mb-[10px]">
+          class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-global1/50 focus:border-global1 mb-[10px]">
           <option value="" selected hidden>Select days...</option>
           <option value="odd">Odd days</option>
           <option value="even">Even days</option>
@@ -89,7 +91,7 @@
       <!-- get start and end times -->
       <label
         for="start_date"
-        class="text-[18px] text-color1 font-medium mb-1 select-none"
+        class="text-[18px] text-global1 font-medium mb-1 select-none"
         >SelectTime</label
       >
       <Field
@@ -120,7 +122,7 @@
       <!-- get courses -->
       <label
         for="start_course"
-        class="text-[18px] text-color1 font-medium mb-1 select-none"
+        class="text-[18px] text-global1 font-medium mb-1 select-none"
         >SelectCourse</label
       >
       <Field
@@ -130,7 +132,7 @@
         name="course">
         <div v-if="course_store.courses">
           <select
-            class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-color1/50 focus:border-color1 mb-[10px]"
+            class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-global1/50 focus:border-global1 mb-[10px]"
             v-model="forms.course"
             @change="handleChangeCourse($event)">
             <option value="" selected hidden>Select course...</option>
@@ -152,7 +154,7 @@
       <label
         v-if="store?.availableRooms"
         for="start_room"
-        class="text-[18px] text-color1 font-medium mb-1 select-none"
+        class="text-[18px] text-global1 font-medium mb-1 select-none"
         >SelectRoom</label
       >
       <Field
@@ -162,7 +164,7 @@
         name="room">
         <div v-if="store?.availableRooms">
           <select
-            class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-color1/50 focus:border-color1 mb-[10px]"
+            class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-global1/50 focus:border-global1 mb-[10px]"
             v-model="forms.room">
             <option value="" selected hidden>Select room</option>
             <option
@@ -183,7 +185,7 @@
       <label
         v-if="store?.teachers.length"
         for="start_course"
-        class="text-[18px] text-color1 font-medium mb-1 select-none"
+        class="text-[18px] text-global1 font-medium mb-1 select-none"
         >SelectTeacher</label
       >
       <Field
@@ -194,7 +196,7 @@
         <div v-if="store?.teachers.length">
           <select
             v-model="forms.teacher"
-            class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-color1/50 focus:border-color1 mb-[10px]">
+            class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-global1/50 focus:border-global1 mb-[10px]">
             <option value="" selected hidden>Select teacher</option>
             <option
               :value="item._id"

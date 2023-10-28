@@ -2,7 +2,7 @@
   <div class="mb-2 block">
     <label
       :for="name"
-      class="text-[18px] text-color1 font-medium mb-5 select-none"
+      class="text-[18px] text-global1 font-medium mb-5 select-none"
       >{{ label }}</label
     >
     <br />
@@ -10,7 +10,7 @@
       as="select"
       :name="name"
       id="select"
-      class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-color1/50 focus:border-color1 mb-[10px]">
+      class="w-full border outline-none rounded-lg px-3 py-2 text-[18px] placeholder:text-global1/50 focus:border-global1 mb-[10px]">
       <option disabled value="">Please select one</option>
       <option
         class="custom-select-option text-paragraph-default"

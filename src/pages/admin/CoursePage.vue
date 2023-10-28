@@ -7,7 +7,7 @@
       </h1>
       <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
+        class="p-[10px] bg-global1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create course
       </button>
     </div>
@@ -32,11 +32,7 @@
       :params="params"
       :change-params="getCourses"></app-pagination>
   </div>
-  <!-- <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
-    Loading...
-  </div> -->
   <table-loader v-if="store.loading"></table-loader>
-
 </template>
 
 <script setup>
@@ -50,12 +46,11 @@ import Loader from "@/components/loader/Loader.vue";
 import TableLoader from "../../components/loader/TableLoader.vue";
 
 const store = useCourseStore();
-const params = {
+const params = ref({
   page: 1,
   limit: 10,
   last_page: null,
-};
-
+});
 const modal_value = ref("");
 const headers = ref([
   { title: "checkbox", value: "checkbox" },
@@ -71,11 +66,11 @@ const openModal = () => {
 };
 
 const getCourses = () => {
-  store.getCourses(params);
+  store.getCourses(params.value);
 };
 
 onMounted(() => {
-  store.getCourses(params);
+  store.getCourses(params.value);
 });
 </script>
 

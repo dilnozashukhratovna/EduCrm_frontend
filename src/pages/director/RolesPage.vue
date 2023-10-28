@@ -8,7 +8,7 @@
       </h1>
       <!-- <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
+        class="p-[10px] bg-global1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create role
       </button> -->
     </div>
@@ -37,9 +37,6 @@
       </template> -->
     </app-table>
   </div>
-  <!-- <div v-else class="mt-[250px] text-center text-color1 text-[30px]">
-    Loading...
-  </div> -->
   <table-loader v-if="store.loading"></table-loader>
 </template>
 

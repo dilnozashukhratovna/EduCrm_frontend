@@ -7,7 +7,7 @@
       <div
         class="w-[1000px] h-[480px] p-[20px] flex bg-[white] justify-between shadow-xl">
         <div class="w-[330px] p-[10px]">
-          <h1 class="text-color1 mb-[30px] text-[27px] font-[600]">
+          <h1 class="text-global1 mb-[30px] text-[27px] font-[600]">
             Personal Information
           </h1>
           <img
@@ -21,8 +21,8 @@
             class="w-[210px] h-[210px] rounded-full ml-[30px]"
             alt="" />
           <div class="p-[15px] h-[80px] mt-[30px]">
-            <p>Personal ID:</p>
-            <h1 class="text-[20px] font-[500] text-color1">
+            <p>Personal ID</p>
+            <h1 class="text-[20px] font-[600] text-global1">
               {{ store?.profile?._id }}
             </h1>
           </div>
@@ -69,7 +69,7 @@
             <svg-icon
               type="mdi"
               :path="mdiPencil"
-              class="z-50 text-color1 cursor-pointer w-[30px] h-[30px]"></svg-icon>
+              class="z-50 text-global1 cursor-pointer w-[30px] h-[30px]"></svg-icon>
           </button>
         </div>
       </div>
@@ -87,7 +87,7 @@
               <svg-icon
                 type="mdi"
                 :path="mdiPencil"
-                class="z-50 text-color1 cursor-pointer w-[30px] h-[30px]"></svg-icon>
+                class="z-50 text-global1 cursor-pointer w-[30px] h-[30px]"></svg-icon>
             </button>
           </div>
         </div>
@@ -103,7 +103,7 @@
               <svg-icon
                 type="mdi"
                 :path="mdiPencil"
-                class="z-50 text-color1 cursor-pointer w-[30px] h-[30px]"></svg-icon>
+                class="z-50 text-global1 cursor-pointer w-[30px] h-[30px]"></svg-icon>
             </button>
           </div>
         </div>

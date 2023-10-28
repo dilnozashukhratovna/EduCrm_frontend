@@ -7,7 +7,7 @@
       </h1>
       <button
         @click="openModal"
-        class="p-[10px] bg-color1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
+        class="p-[10px] bg-global1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
         create student
       </button>
     </div>
@@ -68,11 +68,11 @@ import { mdiPencil, mdiTrashCanOutline, mdiSquareEditOutline } from "@mdi/js";
 
 const store = useStudentStore();
 const studentModal = ref();
-const params = {
+const params = ref({
   page: 1,
-  limit: 7,
+  limit: 9,
   last_page: null,
-};
+});
 
 const modal_value = ref("");
 const headers = ref([
@@ -91,12 +91,12 @@ const openModal = () => {
   modal_value.value.openModal();
 };
 
-const getStudents = async() => {
-  await store.getStudents(params);
+const getStudents = () => {
+  store.getStudents(params.value);
 };
 
 onMounted(() => {
-  store.getStudents(params);
+  store.getStudents(params.value);
 });
 </script>
 

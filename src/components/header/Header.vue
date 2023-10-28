@@ -1,6 +1,6 @@
 <template>
   <div
-    class="w-full h-[76px] bg-color1 flex justify-between items-center px-10 lg:border-l">
+    class="w-full h-[76px] bg-global1 flex justify-between items-center px-10 lg:border-l">
     <div class="flex items-center">
       <div class="button">
         <button

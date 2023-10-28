@@ -1,6 +1,6 @@
 <template>
   <!-- <div class="w-full h-screen flex justify-between">
-    <Sidebar :menu="AdminMenu" class="w-[223px] h-full bg-color1 pt-[70px]">
+    <Sidebar :menu="AdminMenu" class="w-[223px] h-full bg-global1 pt-[70px]">
     </Sidebar>
     <div class="right">
       <Header></Header>
