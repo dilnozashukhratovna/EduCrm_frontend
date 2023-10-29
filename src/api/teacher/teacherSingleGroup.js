@@ -1,13 +1,44 @@
 import axiosClient from "../axios/apiClient";
 
 export const teacherSingleGroup = {
-  getSingleGroup(id) {
-    const url = `groups/all-students/${id}`;
+  // getSingleGroup(id) {
+  //   const url = `groups/all-students/${id}`;
+  //   return axiosClient.get(url);
+  // },
+
+  // getSingleGroup(id, params = {}) {
+  //   const url = `lessons/group/${id}/q?page=${params.page}&limit=${params.limit}`;
+  //   return axiosClient.get(url);
+  // },
+
+  getSingleLesson(groupId, date) {
+    const url = `groups/attendance/${groupId}`;
+    return axiosClient.post(url, {
+      date: date,
+    });
+  },
+
+  updateSingleLesson(payload) {
+    const url = `groups/attendance/update/lesson`;
+    return axiosClient.post(url, {
+      data: payload,
+    });
+  },
+
+  updateSingleLessonAttendance(id, title) {
+    const url = `lessons/lesson/attendance/${id}`;
+    return axiosClient.put(url, {
+      title: title,
+    });
+  },
+
+  getStudentsAttendance(id, params = {}) {
+    const url = `groups/attendance/${id}/all/q?page=${params.page}&limit=${params.limit}`;
     return axiosClient.get(url);
   },
 
-  getStudentsAttendance(id, params) {
-    const url = `groups/attendance/${id}/all/q?page=${params.page}&limit=${params.limit}`;
+  getGroupLessons(id, params = {}) {
+    const url = `lessons/group/${id}/q?page=${params.page}&limit=${params.limit}`;
     return axiosClient.get(url);
   },
 

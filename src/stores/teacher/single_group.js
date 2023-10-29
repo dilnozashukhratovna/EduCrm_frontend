@@ -7,23 +7,40 @@ export const useTeacherSingleGroupStore = defineStore("teacher_single_group", {
     error: null,
     updatedGroup: null,
     attendance: null,
+    lessons: [],
+    group_lessons: [],
   }),
   getters: {},
   actions: {
-    async getTeacherSingleGroup(id) {
+    // async getTeacherSingleGroup(id) {
+    //   try {
+    //     this.loading = true;
+    //     const res = await teacherSingleGroup.getSingleGroup(id);
+    //     // for (let index = 0; index < res.students.length; index++) {
+    //     //   const element = res.students[index];
+    //     //   if (element !== null) {
+    //     //     this.group_students.push(element);
+    //     //   }
+    //     // }
+    //     // this.group_students = res.students.filter(
+    //     //   (item) => item && item.first_name
+    //     // );
+    //     this.lessons = res.lessons;
+    //     console.log("Lessons", this.lessons);
+    //     this.loading = false;
+    //   } catch (error) {
+    //     this.error = error?.response?.data?.message
+    //       ? error?.response?.data?.message
+    //       : error.message;
+    //     console.log(error);
+    //   }
+    // },
+    async getSingleLesson(groupId, date) {
       try {
         this.loading = true;
-        const res = await teacherSingleGroup.getSingleGroup(id);
-        // for (let index = 0; index < res.students.length; index++) {
-        //   const element = res.students[index];
-        //   if (element !== null) {
-        //     this.group_students.push(element);
-        //   }
-        // }
-        this.group_students = res.students.filter(
-          (item) => item && item.first_name
-        );
-        console.log("TeacherGroups", this.group_students);
+        const res = await teacherSingleGroup.getSingleLesson(groupId, date);
+        this.lessons = res;
+        console.log("Lessons", this.lessons);
         this.loading = false;
       } catch (error) {
         this.error = error?.response?.data?.message
@@ -32,12 +49,60 @@ export const useTeacherSingleGroupStore = defineStore("teacher_single_group", {
         console.log(error);
       }
     },
+
+    async updateSingleLesson(payload) {
+      try {
+        this.loading = true;
+        const res = await teacherSingleGroup.updateSingleLesson(payload);
+        // this.lessons = res;
+        // console.log("Lessons", this.lessons);
+        this.loading = false;
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log(error);
+      }
+    },
+
+    async updateSingleLessonAttendance(id, title) {
+      try {
+        this.loading = true;
+        const res = await teacherSingleGroup.updateSingleLessonAttendance(
+          id,
+          title
+        );
+        console.log("Topic", res);
+        this.loading = false;
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log(error);
+      }
+    },
+
     async getStudentsAttendance(id, params) {
       try {
         this.loading = true;
         const res = await teacherSingleGroup.getStudentsAttendance(id, params);
-        this.attendance = res
+        this.attendance = res;
         console.log("Students attendance:", res);
+        this.loading = false;
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log(error);
+      }
+    },
+
+    async getGroupLessons(id) {
+      try {
+        this.loading = true;
+        const res = await teacherSingleGroup.getGroupLessons(id);
+        this.group_lessons = res.lessons;
+        console.log("Group lesssons:", this.group_lessons);
         this.loading = false;
       } catch (error) {
         this.error = error?.response?.data?.message
