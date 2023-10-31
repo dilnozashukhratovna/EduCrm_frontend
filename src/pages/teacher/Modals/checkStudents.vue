@@ -3,40 +3,53 @@
     <h1 class="text-center text-[25px] text-global1 font-[600] mb-[30px]">
       Students attendance
     </h1>
-    <vee-form id="form" @submit="save" :validation-schema="schema">
+    <vee-form
+      id="form"
+      @submit="save"
+      :validation-schema="schema"
+      :initial-values="store?.lessons[0].lesson">
       <VInput
         type="text"
         name="title"
-        placeholder="Enter today's lesson topic..."></VInput>
+        placeholder="Enter today's lesson topic..."
+        :disabled="store?.lessons[0]?.lesson?.pass"></VInput>
     </vee-form>
     <div
       v-for="(item, index) in store?.lessons"
       :key="index"
-      class="flex items-center w-full justify-between my-3">
+      class="flex items-center w-full justify-between my-3 border-b-2 border-grey p-[8px]">
       <span
         >{{ item?.student?.first_name }} {{ item?.student?.last_name }}</span
       >
       <!-- <span v-if="present">present</span>
       <span v-else>absent</span> -->
       <div>
-        <button @click="handleChange(index)" type="button">
+        <el-switch
+          v-model="item.participated"
+          :active-value="true"
+          :inactive-value="false"
+          :disabled="item?.lesson?.pass"
+          class="ml-2"
+          style="
+            --el-switch-on-color: #13ce66;
+            --el-switch-off-color: #ff4949;
+          " />
+        <!-- <button @click="handleChange(index)" type="button">
           <span v-if="item?.participated" class="text-[green]">present</span>
           <span v-else class="text-[crimson]">absent</span>
-          <!-- {{ item?.participated ? "present" : "absent" }} -->
-        </button>
+        </button> -->
       </div>
     </div>
-    <div class="mt-[50px]">
+    <div class="mt-[50px]" v-if="!store?.lessons[0]?.lesson?.pass">
       <VButton
         form="form"
-        btn_type="primary"
+        btn_type="info"
         type="submit"
         :isLoading="store?.loading"
         >save</VButton
       >
     </div>
   </AppModal>
-  <table-loader v-if="store?.loading"></table-loader>
 </template>
 
 <script setup>
@@ -54,6 +67,7 @@ const openModal = () => {
 };
 
 const handleChange = (index) => {
+  // console.log("handleChange index", index);
   store.lessons[index].participated = !store.lessons[index].participated;
 };
 

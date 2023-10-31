@@ -2,7 +2,7 @@
   <button
     :class="classess"
     :disabled="isLoading"
-    class="flex justify-center items-center p-[10px] mt-[30px] rounded-lg border-none disabled:bg-[#416D89] disabled:cursor-wait text-white text-[18px] w-full">
+    class="flex justify-center items-center p-[10px] rounded-lg border-none disabled:bg-[#416D89] disabled:cursor-wait text-white text-[18px] w-full">
     <slot></slot>
     <div v-if="isLoading">
       <svg
@@ -35,7 +35,7 @@ const type_style = {
   danger: "bg-red-600 hover:bg-red-400 active:bg-red-600 disabled:bg-red-300",
   success:
     "bg-green-600 hover:bg-green-400 active:bg-green-600 disabled:bg-green-300",
-  info: "bg-blue-400 hover:bg-blue-400 active:bg-blue-600 disabled:bg-blue-300",
+  info: "bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-blue-300",
 };
 
 const classess = computed(() => {

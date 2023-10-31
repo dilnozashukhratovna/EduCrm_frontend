@@ -34,7 +34,7 @@ export const adminGroup = {
     const url = `courses/all-teachers/${id}`;
     return axiosClient.get(url);
   },
-  
+
   addGroupTeacher(payload) {
     const url = `groups/add-teacher`;
     return axiosClient.post(url, payload);

@@ -9,6 +9,7 @@ export const useGroupStudentStore = defineStore("group_student", {
     newGroupStudent: null,
     updatedGroupStudent: null,
     group_student: null,
+    group_lessons: [],
   }),
   getters: {},
   actions: {
@@ -73,6 +74,38 @@ export const useGroupStudentStore = defineStore("group_student", {
         this.loading = false;
       }
     },
+
+    async getSingleGroupLessons(id) {
+      try {
+        this.loading = true;
+        let res = await adminGroupStudent.getSingleGroupLessons(id);
+        this.group_lessons = res.lessons;
+        console.log("Single Group lessons:", this.group_lessons);
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log(error);
+      } finally {
+        this.loading = false;
+      }
+    },
+
+    async updateSingleGroupLesson(lessonId, payload) {
+      try {
+        this.loading = true;
+        let res = await adminGroupStudent.updateSingleGroupLesson(lessonId, payload);
+        // this.group_lessons = res.lessons;
+        console.log("Updated group lesson:", res);
+      } catch (error) {
+        this.error = error?.response?.data?.message
+          ? error?.response?.data?.message
+          : error.message;
+        console.log(error);
+      } finally {
+        this.loading = false;
+      }
+    },
     // async getOneGroupStudent(id) {
     //   try {
     //     this.loading = true;
@@ -87,6 +120,5 @@ export const useGroupStudentStore = defineStore("group_student", {
     //     this.loading = false;
     //   }
     // },
-   
   },
 });

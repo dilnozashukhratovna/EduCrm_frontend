@@ -22,18 +22,45 @@
 </template> -->
 <template>
   <checkStudents ref="modal_value" />
+  <table-loader v-if="loading"></table-loader>
   <div class="p-[20px] pl-[30px]">
+    <!-- ============TITLE DIV=============== -->
     <div class="mb-[20px] flex justify-between items-center">
       <h1 class="text-[#002842] font-Inter text-[22px] font-[600] uppercase">
         students ({{ store?.attendance?.length }})
       </h1>
-      <button @click="openModal">
+      <div class="flex">
+        <select
+          @change="handleChangeSelectData($event)"
+          class="outline-none rounded-lg mr-[30px] p-[10px] text-global1 text-[18px] font-[500]"
+          :v-model="date">
+          <option
+            :value="item.date"
+            v-for="(item, index) in store?.group_lessons"
+            :key="index">
+            {{ FormatDate(item?.date) }}
+          </option>
+        </select>
+        <div class="w-30px mr-[30px] flex justify-center items-center">
+          <VButton
+            btn_type="primary"
+            @click="openModal"
+            :isLoading="loading_btn">
+            <svg-icon
+              type="mdi"
+              :path="mdiMenu"
+              class="text-[#fff] w-[30px] h-[30px]"></svg-icon
+          ></VButton>
+        </div>
+      </div>
+      <!-- <button @click="openModal">
         <svg-icon
           type="mdi"
           :path="mdiMenu"
           class="text-global1 mr-[30px] w-[40px] h-[40px]"></svg-icon>
-      </button>
+      </button> -->
     </div>
+    <!-- ============ COLLAPSE FOR LESSONS=============== -->
     <el-collapse>
       <el-collapse-item key="1" name="1">
         <template #title>
@@ -66,7 +93,9 @@
                   :class="
                     item?.pass
                       ? 'bg-global1 text-[#fff] border-none'
-                      : 'bg-[#fff] text-global1 border-[1px]  border-global1'
+                      : item?.paid
+                      ? 'bg-[#fff] text-global1 border-[1px] border-global1'
+                      : 'bg-[crimson] text-[#fff] border-none'
                   ">
                   {{ FormatDateAttendance(item?.date) }}
                 </div>
@@ -76,15 +105,18 @@
         </div>
       </el-collapse-item>
     </el-collapse>
+    <!-- ============ COLLAPSE FOR STUDENTS=============== -->
     <div class="w-[100%]">
       <el-collapse>
         <el-collapse-item
           v-for="(item, index) in store?.attendance"
-          :key="index"
+          :key="++index"
           :name="item?.student?._id">
           <template #title>
             <div class="custom-title">
-              {{ `${item?.student?.first_name} ${item?.student?.last_name}` }}
+              {{
+                `${index} ${item?.student?.first_name} ${item?.student?.last_name}`
+              }}
             </div>
           </template>
           <div class="w-full flex gap-2 flex-wrap">
@@ -125,9 +157,13 @@ import SvgIcon from "@jamescoyle/vue-icon";
 import { mdiMenu, mdiBookOpenVariant } from "@mdi/js";
 import checkStudents from "./Modals/checkStudents.vue";
 import VButton from "../../components/form/VButton.vue";
+import TableLoader from "../../components/loader/TableLoader.vue";
 const route = useRoute();
+const loading = ref(false);
+const loading_btn = ref(false);
 const store = useTeacherSingleGroupStore();
 const groupId = route.params.id;
+const date = ref(FormatDate(new Date()));
 const params = ref({
   page: 1,
   limit: 10,
@@ -135,33 +171,44 @@ const params = ref({
 });
 const modal_value = ref("");
 
+const handleChangeSelectData = (e) => {
+  date.value = FormatDate(e.target.value);
+  console.log("Event:", e.target.value);
+  // location.reload();
+};
+
 const openModal = async () => {
-  let date = FormatDate(new Date());
-  await store.getSingleLesson(groupId, "2023-11-02");
+  loading_btn.value = true;
+  await store.getSingleLesson(groupId, date.value);
+  loading_btn.value = false;
   modal_value.value.openModal();
+
 };
 
 onMounted(async () => {
   // await store.getTeacherSingleGroup(groupId);
+  loading.value = true;
   await store.getStudentsAttendance(groupId, params.value);
   await store.getGroupLessons(groupId);
+  loading.value = false;
 });
 </script>
 
 <style lang="scss" scoped>
 .el-collapse-item {
   color: #12486b;
-  padding: 15px;
+  padding: 8px;
   border: 1px solid #12486b;
   margin: 8px 0;
   background-color: #fff;
-  border-radius: 15px;
+  border-radius: 10px;
 }
 
 .custom-title {
-  font-size: 18px;
+  font-size: 20px;
   border: none;
   color: #12486b;
+  padding-left: 15px;
 }
 
 .custom-title2 {

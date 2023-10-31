@@ -119,8 +119,8 @@ const openModal = () => {
   modal_value.value.openModal();
 };
 
-const getGroups = () => {
-  store.getGroups(params.value);
+const getGroups = async () => {
+  await store.getGroups(params.value);
 };
 
 onMounted(async () => {
