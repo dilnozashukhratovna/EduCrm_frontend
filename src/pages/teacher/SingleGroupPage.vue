@@ -1,26 +1,5 @@
-<!-- <template>
-  <div class="p-[20px] pl-[30px]">
-    <h1 class="text-[#002842] font-Inter text-[22px] font-[600] uppercase">
-      Students
-    </h1>
-    <div class="mt-[20px]">
-      <el-collapse>
-        <el-collapse-item
-          :title="`${item?.student?.first_name} ${item?.student?.last_name}`"
-          :name="item?.student?._id"
-          v-for="(item, index) in store?.attendance"
-          :key="index">
-          <div>
-            <h1 v-if="item?.student?.first_name !== null">
-              {{ item?.student?.first_name }}
-            </h1>
-          </div>
-        </el-collapse-item>
-      </el-collapse>
-    </div>
-  </div>
-</template> -->
 <template>
+  <uploadVideo ref="modal_value2" />
   <checkStudents ref="modal_value" />
   <table-loader v-if="loading"></table-loader>
   <div class="p-[20px] pl-[30px]">
@@ -41,24 +20,27 @@
             {{ FormatDate(item?.date) }}
           </option>
         </select>
-        <div class="w-30px mr-[30px] flex justify-center items-center">
+        <div class="w-30px mr-[30px] flex justify-center items-center gap-3">
           <VButton
             btn_type="primary"
             @click="openModal"
             :isLoading="loading_btn">
-            <svg-icon
-              type="mdi"
-              :path="mdiMenu"
-              class="text-[#fff] w-[30px] h-[30px]"></svg-icon
+            <span
+              ><svg-icon
+                type="mdi"
+                :path="mdiMenu"
+                class="text-[#fff] w-[30px] h-[30px]"></svg-icon></span
+          ></VButton>
+          <VButton btn_type="create" @click="openVideoModal"
+            ><span>UploadVideo</span
+            ><span
+              ><svg-icon
+                type="mdi"
+                :path="mdiFileUpload"
+                class="text-[#fff] w-[30px] h-[30px] ml-[5px]"></svg-icon></span
           ></VButton>
         </div>
       </div>
-      <!-- <button @click="openModal">
-        <svg-icon
-          type="mdi"
-          :path="mdiMenu"
-          class="text-global1 mr-[30px] w-[40px] h-[40px]"></svg-icon>
-      </button> -->
     </div>
     <!-- ============ COLLAPSE FOR LESSONS=============== -->
     <el-collapse>
@@ -127,13 +109,21 @@
                 :width="200"
                 trigger="hover"
                 transition="100 linear"
-                :content="item2?.comment">
+                :content="
+                  item2?.comment
+                    ? item2?.comment
+                    : item2.participated
+                    ? ''
+                    : 'sababsiz'
+                ">
                 <template #reference>
                   <div
                     class="w-[40px] h-[40px] border-[1px] px-[5px] border-global1 flex items-center justify-center rounded-lg"
                     :class="
                       item2?.participated
                         ? 'text-global1'
+                        : item2.comment
+                        ? 'bg-[#fff] text-[crimson] border-[1px] border-[crimson]'
                         : 'bg-[crimson] text-[#fff] border-none'
                     ">
                     {{ FormatDateAttendance(item2?.date) }}
@@ -154,8 +144,9 @@ import { useTeacherSingleGroupStore } from "../../stores/teacher/single_group";
 import { useRoute } from "vue-router";
 import { FormatDate, FormatDateAttendance } from "../../hooks/FormatDate";
 import SvgIcon from "@jamescoyle/vue-icon";
-import { mdiMenu, mdiBookOpenVariant } from "@mdi/js";
+import { mdiMenu, mdiBookOpenVariant, mdiFileUpload } from "@mdi/js";
 import checkStudents from "./Modals/checkStudents.vue";
+import uploadVideo from "./Modals/uploadVideo.vue";
 import VButton from "../../components/form/VButton.vue";
 import TableLoader from "../../components/loader/TableLoader.vue";
 const route = useRoute();
@@ -170,6 +161,7 @@ const params = ref({
   last_page: null,
 });
 const modal_value = ref("");
+const modal_value2 = ref("");
 
 const handleChangeSelectData = (e) => {
   date.value = FormatDate(e.target.value);
@@ -182,11 +174,13 @@ const openModal = async () => {
   await store.getSingleLesson(groupId, date.value);
   loading_btn.value = false;
   modal_value.value.openModal();
+};
 
+const openVideoModal = async () => {
+  modal_value2.value.openModal();
 };
 
 onMounted(async () => {
-  // await store.getTeacherSingleGroup(groupId);
   loading.value = true;
   await store.getStudentsAttendance(groupId, params.value);
   await store.getGroupLessons(groupId);

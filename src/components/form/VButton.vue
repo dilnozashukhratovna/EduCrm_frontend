@@ -35,7 +35,8 @@ const type_style = {
   danger: "bg-red-600 hover:bg-red-400 active:bg-red-600 disabled:bg-red-300",
   success:
     "bg-green-600 hover:bg-green-400 active:bg-green-600 disabled:bg-green-300",
-  info: "bg-blue-400 hover:bg-blue-500 active:bg-blue-600 disabled:bg-blue-300",
+  create:
+    "bg-blue-400 hover:bg-blue-300 active:bg-blue-600 disabled:bg-blue-300",
 };
 
 const classess = computed(() => {

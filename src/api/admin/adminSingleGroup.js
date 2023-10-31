@@ -21,8 +21,17 @@ export const adminGroupStudent = {
     return axiosClient.get(url);
   },
 
+  getSingleGroupStudents(id) {
+    const url = `groups/attendance/${id}/all/q?`;
+    return axiosClient.get(url);
+  },
+
   updateSingleGroupLesson(lessonId, payload) {
     const url = `lessons/lesson/comment/${lessonId}`;
+    return axiosClient.put(url, payload);
+  },
+  updateSingleGroupStudent(lessonId, payload) {
+    const url = `groups/attendance/update/lesson/${lessonId}`;
     return axiosClient.put(url, payload);
   },
 

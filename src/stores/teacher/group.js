@@ -16,7 +16,9 @@ export const useTeacherGroupStore = defineStore("teacher_group", {
       try {
         this.loading = true;
         const res = await teacherGroups.getGroups(id);
-        this.groups = res.groups;
+        this.groups = res.groups.filter((item) => {
+          if (item != null) return item;
+        });
         console.log("TeacherGroups", this.groups);
         this.loading = false;
       } catch (error) {

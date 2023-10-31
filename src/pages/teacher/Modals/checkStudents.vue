@@ -43,7 +43,7 @@
     <div class="mt-[50px]" v-if="!store?.lessons[0]?.lesson?.pass">
       <VButton
         form="form"
-        btn_type="info"
+        btn_type="create"
         type="submit"
         :isLoading="store?.loading"
         >save</VButton

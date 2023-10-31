@@ -1,17 +1,12 @@
 <template>
-  <GroupModal ref="modal_value" />
+  <!-- <GroupModal ref="modal_value" /> -->
   <table-loader v-if="store.loading"></table-loader>
   <div v-if="store?.groups" class="p-[20px] pl-[30px]">
     <div class="mb-[20px] flex justify-between items-center">
       <h1 class="text-[#002842] font-Inter text-[22px] font-[600] uppercase">
-        <!-- group ({{ store?.groups?.length }}) -->
-        teacher groups
+        teacher groups ({{ store?.groups?.length }})
+        <!-- teacher groups -->
       </h1>
-      <!-- <button
-        @click="openModal"  
-        class="p-[10px] bg-global1 text-white w-[200px] rounded-full hover:bg-[#5388a8]">
-        create group
-      </button> -->
     </div>
     <!-- ===================== TABLE ============== -->
     <app-table :headers="headers" :body="store?.groups">
@@ -69,9 +64,6 @@
       </template>
     </app-table>
   </div>
-  <!-- <div v-else class="mt-[250px] text-center text-global1 text-[30px]">
-    Loading...
-  </div> -->
 </template>
 
 <script setup>
@@ -99,9 +91,9 @@ const headers = ref([
   { title: "ACTION", value: "action" },
 ]);
 
-const openModal = () => {
-  modal_value.value.openModal();
-};
+// const openModal = () => {
+//   modal_value.value.openModal();
+// };
 
 onMounted(async () => {
   await auth_store.getProfile();

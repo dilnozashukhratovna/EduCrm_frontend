@@ -10,7 +10,7 @@
         name="description">
       </VTextarea>
       <div class="mt-[30px]">
-        <VButton btn_type="info" type="submit" :isLoading="store?.loading"
+        <VButton btn_type="create" type="submit" :isLoading="store?.loading"
           >Save</VButton
         >
       </div>
@@ -26,7 +26,7 @@ import VButton from "../../../components/form/VButton.vue";
 import { useGroupStudentStore } from "../../../stores/admin/single_group";
 
 const store = useGroupStudentStore();
-const lessonId = ref();
+const itemId = ref();
 const schema = computed(() => {
   return {
     description: "required|min:3|max:100",
@@ -39,19 +39,29 @@ const forms = ref({});
 const openModal = (item) => {
   if (item) {
     forms.value = { ...item };
-    lessonId.value = item._id;
+    itemId.value = item._id;
   }
-  //   if (item._id) lessonId.value = item._id;
   dialog.value = true;
-  console.log("lessonId:", id);
+  console.log("itemId:", itemId.value);
 };
 
 const send = async (value) => {
-  console.log("Entered to send function", value.description);
-  await store.updateSingleGroupLesson(lessonId.value, {
-    ...value,
-    paid: false,
-  });
+  console.log(value);
+  if (value.number) {
+    console.log("Entered to send function", value.description);
+    await store.updateSingleGroupLesson(itemId.value, {
+      ...value,
+      paid: false,
+    });
+    dialog.value = false;
+  } else {
+    let payload = {
+      comment: value.description,
+      participated: false,
+    };
+    await store.updateSingleGroupStudent(forms.value.lesson, payload);
+    dialog.value = false;
+  }
 };
 
 defineExpose({ openModal });
