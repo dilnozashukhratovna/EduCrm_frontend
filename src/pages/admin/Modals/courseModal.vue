@@ -29,9 +29,11 @@
         name="period"
         label="CoursePeriod"
         placeholder="Course period..."></VInput>
-      <VButton btn_type="primary" :isLoading="loading" type="submit">
-        {{ btn_title }}
-      </VButton>
+      <div class="mt-[30px]">
+        <VButton btn_type="primary" :isLoading="loading" type="submit">
+          {{ btn_title }}
+        </VButton>
+      </div>
     </vee-form>
   </app-modal>
   <app-modal v-model="dialog2">
@@ -43,7 +45,6 @@
 import AppModal from "../../../components/ui/app-modal.vue";
 import VInput from "../../../components/form/VInput.vue";
 import VButton from "../../../components/form/VButton.vue";
-import Loader from "../../../components/loader/Loader.vue";
 import VDelete from "../../../components/form/VDelete.vue";
 import { useCourseStore } from "../../../stores/admin/course";
 import Notification from "../../../plugins/Notification";
@@ -112,12 +113,9 @@ const send = async (values) => {
 };
 const deleteCourse = async () => {
   loading.value = true;
-  // course.value = await getOneCourse();
-  // console.log("One course in delete func:", course.value);
   await store.deleteCourse(courseId.value);
   loading.value = false;
   dialog2.value = false;
-  // location.reload();
   Notification("Course deleted!", "success");
 };
 
@@ -127,7 +125,6 @@ const getOneCourse = async () => {
   console.log("One course in getOneCourse func:", course.value);
   loading.value = false;
   dialog2.value = false;
-  // location.reload();
 };
 
 defineExpose({ openModal, openDeleteModal });

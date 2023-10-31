@@ -34,7 +34,6 @@ export const useGroupStore = defineStore("group", {
     },
     async createGroup(payload) {
       try {
-        this.loading = true;
         const data = await adminGroup.createGroup(payload);
         this.newGroup = JSON.parse(JSON.stringify(data));
         this.group_id = this.newGroup.group._id;
@@ -45,13 +44,10 @@ export const useGroupStore = defineStore("group", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     async updateGroup(payload, id) {
       try {
-        this.loading = true;
         const data = await adminGroup.updateGroup(payload, id);
         this.updatedGroup = JSON.parse(JSON.stringify(data));
         console.log("updatedGroup:", this.updatedGroup);
@@ -60,27 +56,21 @@ export const useGroupStore = defineStore("group", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
 
     async deleteGroup(id) {
       try {
-        this.loading = true;
         await adminGroup.deleteGroup(id);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     async getOneGroup(id) {
       try {
-        this.loading = true;
         this.group = await adminGroup.getOneGroup(id);
         console.log("Group from table:", this.group);
       } catch (error) {
@@ -88,13 +78,10 @@ export const useGroupStore = defineStore("group", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     async availableAdminRooms(payload) {
       try {
-        this.loading = true;
         this.availableRooms = await adminGroup.availableAdminRooms(payload);
         console.log("Available rooms:", this.availableRooms);
       } catch (error) {
@@ -102,13 +89,10 @@ export const useGroupStore = defineStore("group", {
           ? error?.response?.data?.message
           : error.message;
         console.log("Error in availableRooms func in store", error);
-      } finally {
-        this.loading = false;
       }
     },
     async getGroupTeacher(id) {
       try {
-        this.loading = true;
         let res = await adminGroup.getGroupTeacher(id);
         this.teachers = res.teachers;
         console.log("Teachers:", this.teachers);
@@ -117,21 +101,16 @@ export const useGroupStore = defineStore("group", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     async addGroupTeacher(payload) {
       try {
-        this.loading = true;
         await adminGroup.addGroupTeacher(payload);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
   },

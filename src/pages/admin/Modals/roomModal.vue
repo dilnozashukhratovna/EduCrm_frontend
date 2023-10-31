@@ -24,9 +24,11 @@
         name="size"
         label="RoomSize"
         placeholder="Room size..."></VInput>
-      <VButton btn_type="primary" :isLoading="loading" type="submit">
-        send
-      </VButton>
+      <div class="mt-[30px]">
+        <VButton btn_type="primary" :isLoading="loading" type="submit">
+          send
+        </VButton>
+      </div>
     </vee-form>
   </app-modal>
   <app-modal v-model="dialog2">
@@ -38,7 +40,6 @@
 import AppModal from "../../../components/ui/app-modal.vue";
 import VInput from "../../../components/form/VInput.vue";
 import VButton from "../../../components/form/VButton.vue";
-import Loader from "../../../components/loader/Loader.vue";
 import { useRoomStore } from "../../../stores/admin/room";
 import Notification from "../../../plugins/Notification";
 import VDelete from "../../../components/form/VDelete.vue";
@@ -104,8 +105,6 @@ const send = async (values) => {
 };
 const deleteRoom = async () => {
   loading.value = true;
-  // room.value = await getOneRoom();
-  // console.log("One room in delete func:", room.value);
   await store.deleteRoom(roomId.value);
   loading.value = false;
   dialog2.value = false;
@@ -119,7 +118,6 @@ const getOneRoom = async () => {
   console.log("One room in getOneRoom func:", room.value);
   loading.value = false;
   dialog2.value = false;
-  // location.reload();
 };
 
 defineExpose({ openModal, openDeleteModal });

@@ -62,7 +62,6 @@ import VActions from "../../components/form/VActions.vue";
 import { ref, onMounted } from "vue";
 import AppTable from "../../components/ui/app-table.vue";
 import StudentModal from "./Modals/studentModal.vue";
-import Loader from "@/components/loader/Loader.vue";
 import TableLoader from "../../components/loader/TableLoader.vue";
 import SvgIcon from "@jamescoyle/vue-icon";
 import appPagination from "../../components/ui/app-pagination.vue";

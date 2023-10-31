@@ -32,7 +32,6 @@ export const useStudentStore = defineStore("student", {
     },
     async createStudent(payload) {
       try {
-        this.loading = true;
         const data = await adminStudent.createStudent(payload);
         this.newStudent = JSON.parse(JSON.stringify(data));
         console.log("NewStudent:", this.newStudent);
@@ -44,13 +43,10 @@ export const useStudentStore = defineStore("student", {
           : error.message;
         console.log(error);
         Notification("Unproper data submitted", "danger");
-      } finally {
-        this.loading = false;
       }
     },
     async updateStudent(payload, id) {
       try {
-        this.loading = true;
         const data = await adminStudent.updateStudent(payload, id);
         this.updatedStudent = JSON.parse(JSON.stringify(data));
         console.log("updatedStudent:", this.updatedStudent);
@@ -60,14 +56,11 @@ export const useStudentStore = defineStore("student", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
 
     async deleteStudent(id) {
       try {
-        this.loading = true;
         await adminStudent.deleteStudent(id);
         Notification("Success", "success");
         location.reload();
@@ -77,13 +70,10 @@ export const useStudentStore = defineStore("student", {
           : error.message;
         console.log(error);
         Notification("Error occured", "danger");
-      } finally {
-        this.loading = false;
       }
     },
     async getOneStudent(id) {
       try {
-        this.loading = true;
         this.student = await adminStudent.getOneStudent(id);
         console.log("Student from table:", this.student);
       } catch (error) {
@@ -91,8 +81,6 @@ export const useStudentStore = defineStore("student", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
   },

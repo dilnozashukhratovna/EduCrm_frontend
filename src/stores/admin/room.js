@@ -31,7 +31,6 @@ export const useRoomStore = defineStore("room", {
     },
     async createRoom(payload) {
       try {
-        this.loading = true;
         const data = await adminRoom.createRoom(payload);
         this.newRoom = JSON.parse(JSON.stringify(data));
         console.log("NewRoom:", this.newRoom);
@@ -40,13 +39,10 @@ export const useRoomStore = defineStore("room", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     async updateRoom(payload, id) {
       try {
-        this.loading = true;
         const data = await adminRoom.updateRoom(payload, id);
         this.updatedRoom = JSON.parse(JSON.stringify(data));
         console.log("updatedRoom:", this.updatedRoom);
@@ -55,27 +51,21 @@ export const useRoomStore = defineStore("room", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
 
     async deleteRoom(id) {
       try {
-        this.loading = true;
         await adminRoom.deleteRoom(id);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     async getOneRoom(id) {
       try {
-        this.loading = true;
         this.room = await adminRoom.getOneRoom(id);
         console.log("Room from table:", this.room);
       } catch (error) {
@@ -83,8 +73,6 @@ export const useRoomStore = defineStore("room", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
   },

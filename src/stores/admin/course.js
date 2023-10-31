@@ -32,7 +32,6 @@ export const useCourseStore = defineStore("course", {
     },
     async createCourse(payload) {
       try {
-        this.loading = true;
         const data = await adminCourse.createCourse(payload);
         this.newCourse = JSON.parse(JSON.stringify(data));
         console.log("NewCourse:", this.newCourse);
@@ -44,13 +43,10 @@ export const useCourseStore = defineStore("course", {
           : error.message;
         console.log(error);
         Notification("Unproper data submitted", "danger");
-      } finally {
-        this.loading = false;
       }
     },
     async updateCourse(payload, id) {
       try {
-        this.loading = true;
         const data = await adminCourse.updateCourse(payload, id);
         this.updatedCourse = JSON.parse(JSON.stringify(data));
         console.log("updatedCourse:", this.updatedCourse);
@@ -59,27 +55,21 @@ export const useCourseStore = defineStore("course", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
 
     async deleteCourse(id) {
       try {
-        this.loading = true;
         await adminCourse.deleteCourse(id);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     async getOneCourse(id) {
       try {
-        this.loading = true;
         this.course = await adminCourse.getOneCourse(id);
         console.log("Course from table:", this.course);
       } catch (error) {
@@ -87,8 +77,6 @@ export const useCourseStore = defineStore("course", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
   },

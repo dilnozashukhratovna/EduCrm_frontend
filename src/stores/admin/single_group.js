@@ -33,7 +33,6 @@ export const useGroupStudentStore = defineStore("group_student", {
     },
     async createGroupStudent(payload) {
       try {
-        this.loading = true;
         const data = await adminGroupStudent.createGroupStudent(payload);
         this.newGroupStudent = JSON.parse(JSON.stringify(data));
         console.log("NewGroupStudent:", this.newGroupStudent);
@@ -42,8 +41,6 @@ export const useGroupStudentStore = defineStore("group_student", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     // async updateGroupStudent(payload, id) {
@@ -64,21 +61,17 @@ export const useGroupStudentStore = defineStore("group_student", {
 
     async deleteGroupStudent(id) {
       try {
-        this.loading = true;
         await adminGroupStudent.deleteGroupStudent(id);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
 
     async getSingleGroupLessons(id) {
       try {
-        this.loading = true;
         let res = await adminGroupStudent.getSingleGroupLessons(id);
         this.group_lessons = res.lessons;
         console.log("Single Group lessons:", this.group_lessons);
@@ -87,13 +80,10 @@ export const useGroupStudentStore = defineStore("group_student", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     async getSingleGroupStudents(id) {
       try {
-        this.loading = true;
         let res = await adminGroupStudent.getSingleGroupStudents(id);
         this.single_group_students = res;
         console.log("Single Group students:", this.single_group_students);
@@ -102,14 +92,11 @@ export const useGroupStudentStore = defineStore("group_student", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
 
     async updateSingleGroupLesson(lessonId, payload) {
       try {
-        this.loading = true;
         let res = await adminGroupStudent.updateSingleGroupLesson(
           lessonId,
           payload
@@ -122,13 +109,10 @@ export const useGroupStudentStore = defineStore("group_student", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     async updateSingleGroupStudent(lessonId, payload) {
       try {
-        this.loading = true;
         let res = await adminGroupStudent.updateSingleGroupStudent(
           lessonId,
           payload
@@ -140,23 +124,7 @@ export const useGroupStudentStore = defineStore("group_student", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
-    // async getOneGroupStudent(id) {
-    //   try {
-    //     this.loading = true;
-    //     this.group_student = await adminGroupStudent.getOneGroupStudent(id);
-    //     console.log("GroupStudent from table:", this.group_student);
-    //   } catch (error) {
-    //     this.error = error?.response?.data?.message
-    //       ? error?.response?.data?.message
-    //       : error.message;
-    //     console.log(error);
-    //   } finally {
-    //     this.loading = false;
-    //   }
-    // },
   },
 });

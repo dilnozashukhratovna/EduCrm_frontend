@@ -113,7 +113,6 @@ const send = async (values) => {
     };
     loading.value = true;
     await store.createStudent(payload);
-    // console.log("Image:", image);
     loading.value = false;
     dialog.value = false;
   } else {
@@ -132,7 +131,6 @@ const send = async (values) => {
     console.log("Image:", image);
     loading.value = false;
     dialog.value = false;
-    // location.reload();
   }
 };
 const deleteStudent = async () => {

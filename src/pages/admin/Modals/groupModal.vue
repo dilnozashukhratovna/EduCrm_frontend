@@ -214,9 +214,11 @@
       </Field>
 
       <!-- send data button -->
-      <VButton btn_type="primary" :isLoading="loading" type="submit">
-        Send
-      </VButton>
+      <div class="mt-[30px]">
+        <VButton btn_type="primary" :isLoading="loading" type="submit">
+          Send
+        </VButton>
+      </div>
     </Form>
   </app-modal>
   <!-- ===========DELETE MODAL======================= -->
@@ -234,7 +236,6 @@ import VButton from "../../../components/form/VButton.vue";
 import VDelete from "../../../components/form/VDelete.vue";
 import { useGroupStore } from "../../../stores/admin/group";
 import { useCourseStore } from "../../../stores/admin/course";
-import Notification from "../../../plugins/Notification";
 import { Form, Field } from "vee-validate";
 import { ref, watch } from "vue";
 import moment from "moment";
@@ -343,7 +344,6 @@ const deleteGroup = async () => {
   loading.value = false;
   dialog2.value = false;
   location.reload();
-  Notification("Group deleted!", "success");
 };
 
 const getOneGroup = async () => {
@@ -352,7 +352,6 @@ const getOneGroup = async () => {
   console.log("One group in getOneGroup func:", group.value);
   loading.value = false;
   dialog2.value = false;
-  // location.reload();
 };
 
 defineExpose({ openModal, openDeleteModal });

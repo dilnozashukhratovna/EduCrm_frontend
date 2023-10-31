@@ -21,8 +21,6 @@
       <span
         >{{ item?.student?.first_name }} {{ item?.student?.last_name }}</span
       >
-      <!-- <span v-if="present">present</span>
-      <span v-else>absent</span> -->
       <div>
         <el-switch
           v-model="item.participated"
@@ -34,10 +32,6 @@
             --el-switch-on-color: #13ce66;
             --el-switch-off-color: #ff4949;
           " />
-        <!-- <button @click="handleChange(index)" type="button">
-          <span v-if="item?.participated" class="text-[green]">present</span>
-          <span v-else class="text-[crimson]">absent</span>
-        </button> -->
       </div>
     </div>
     <div class="mt-[50px]" v-if="!store?.lessons[0]?.lesson?.pass">
@@ -58,16 +52,13 @@ import AppModal from "../../../components/ui/app-modal.vue";
 import { useTeacherSingleGroupStore } from "../../../stores/teacher/single_group";
 import VButton from "../../../components/form/VButton.vue";
 import VInput from "../../../components/form/VInput.vue";
-import TableLoader from "../../../components/loader/TableLoader.vue";
 const dialog = ref(false);
 const store = useTeacherSingleGroupStore();
-const present = ref(true);
 const openModal = () => {
   dialog.value = true;
 };
 
 const handleChange = (index) => {
-  // console.log("handleChange index", index);
   store.lessons[index].participated = !store.lessons[index].participated;
 };
 
@@ -80,10 +71,8 @@ const schema = computed(() => {
 const save = async (value) => {
   let id = store.lessons[0].lesson._id;
   await store.updateSingleLesson(store?.lessons);
-  await store.updateSingleLessonAttendance(id, value.title);
+  store.updateSingleLessonAttendance(id, value.title);
   dialog.value = false;
-  //   console.log("ID", store?.lessons[0].lesson._id);
-  //   console.log("Value:", value);
 };
 
 defineExpose({ openModal });

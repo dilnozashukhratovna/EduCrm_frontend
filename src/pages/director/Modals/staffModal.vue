@@ -42,12 +42,13 @@
         name="course"
         v-if="is_active"></VSelect>
 
-      <VButton btn_type="primary" :isLoading="loading" type="submit">
-        {{ btn_title }}
-      </VButton>
+      <div class="mt-[30px]">
+        <VButton btn_type="primary" :isLoading="loading" type="submit">
+          {{ btn_title }}
+        </VButton>
+      </div>
     </vee-form>
   </app-modal>
-
   <app-modal v-model="dialog2">
     <VDelete v-model="dialog2" :delete-function="deleteStaff" name="staff" />
   </app-modal>
@@ -61,14 +62,12 @@ import VDelete from "../../../components/form/VDelete.vue";
 import VButton from "../../../components/form/VButton.vue";
 import VSelect from "../../../components/form/VSelect.vue";
 import { useStaffStore } from "../../../stores/director/staffs";
-import { useAuthStore } from "../../../stores/auth";
 import { useCourseStore } from "../../../stores/admin/course";
 import { useRoleStore } from "../../../stores/director/roles";
 import Notification from "../../../plugins/Notification";
 const dialog = ref(false);
 const dialog2 = ref(false);
 const store = useStaffStore();
-const store2 = useAuthStore();
 const course_store = useCourseStore();
 const role_store = useRoleStore();
 const loading = ref(false);
@@ -83,9 +82,11 @@ const schema = computed(() => {
   };
 });
 const forms = ref({});
-const openModal = () => {
+
+const openModal = async (item) => {
+  if (item) forms.value = { ...item };
   dialog.value = true;
-  course_store.getCourses();
+  await course_store.getCourses();
   role_store.getRoles();
 };
 const openDeleteModal = () => {
@@ -145,7 +146,6 @@ const send = async (values) => {
     Notification("Staff created!", "success");
     loading.value = false;
     dialog.value = false;
-    // location.reload();
   } catch (error) {
     console.log("Error in creating staff in staffModal:", error);
     Notification("Error occured!", "danger");
