@@ -31,7 +31,6 @@ export const useStaffStore = defineStore("staff", {
     },
     async createStaff(payload) {
       try {
-        this.loading = true;
         const data = await directorStaffs.createStaff(payload);
         this.newStaff = JSON.parse(JSON.stringify(data));
         console.log("NewStaff:", this.newStaff);
@@ -40,8 +39,6 @@ export const useStaffStore = defineStore("staff", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     // async updateStaff(payload, id) {

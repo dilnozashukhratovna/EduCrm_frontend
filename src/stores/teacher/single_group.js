@@ -52,11 +52,7 @@ export const useTeacherSingleGroupStore = defineStore("teacher_single_group", {
 
     async updateSingleLesson(payload) {
       try {
-        this.loading = true;
         const res = await teacherSingleGroup.updateSingleLesson(payload);
-        // this.lessons = res;
-        // console.log("Lessons", this.lessons);
-        this.loading = false;
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
@@ -67,13 +63,11 @@ export const useTeacherSingleGroupStore = defineStore("teacher_single_group", {
 
     async updateSingleLessonAttendance(id, title) {
       try {
-        this.loading = true;
         const res = await teacherSingleGroup.updateSingleLessonAttendance(
           id,
           title
         );
         console.log("Topic", res);
-        this.loading = false;
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message

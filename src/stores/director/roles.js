@@ -29,7 +29,6 @@ export const useRoleStore = defineStore("role", {
     },
     async createRole(payload) {
       try {
-        this.loading = true;
         const data = await directorRoles.createRole(payload);
         this.newRole = JSON.parse(JSON.stringify(data));
         console.log("NewRole:", this.newRole);
@@ -38,13 +37,10 @@ export const useRoleStore = defineStore("role", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
     async updateRole(payload, id) {
       try {
-        this.loading = true;
         const data = await directorRoles.updateRole(payload, id);
         this.updatedRole = JSON.parse(JSON.stringify(data));
         console.log("updatedRole:", this.updatedRole);
@@ -53,37 +49,18 @@ export const useRoleStore = defineStore("role", {
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
 
     async deleteRole(id) {
       try {
-        this.loading = true;
         await directorRoles.deleteRole(id);
       } catch (error) {
         this.error = error?.response?.data?.message
           ? error?.response?.data?.message
           : error.message;
         console.log(error);
-      } finally {
-        this.loading = false;
       }
     },
-    // async getOneRole(id) {
-    //   try {
-    //     this.loading = true;
-    //     this.role = await adminRole.getOneRole(id);
-    //     console.log("Role from table:", this.role);
-    //   } catch (error) {
-    //     this.error = error?.response?.data?.message
-    //       ? error?.response?.data?.message
-    //       : error.message;
-    //     console.log(error);
-    //   } finally {
-    //     this.loading = false;
-    //   }
-    // },
   },
 });
